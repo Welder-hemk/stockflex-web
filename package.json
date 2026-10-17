@@ -1,0 +1,12 @@
+{
+  "name": "stockflex-web",
+  "private": true,
+  "description": "Site institucional (raiz) + sistema StockFlex (/app) num único deploy",
+  "scripts": {
+    "install:all": "npm ci --prefix site && npm ci --prefix app",
+    "build": "npm run install:all && npm run build --prefix site && npm run build --prefix app && node scripts/merge-dist.mjs",
+    "dev:site": "npm run dev --prefix site",
+    "dev:app": "npm run dev --prefix app",
+    "preview": "npx --yes serve@14 dist -s"
+  }
+}

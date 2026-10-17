@@ -1,0 +1,47 @@
+# Deploy único: site institucional na raiz e sistema em /app
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Sistema: qualquer rota dentro de /app abre o app (login, portal, etc.)
+[[redirects]]
+  from = "/app"
+  to = "/app/"
+  status = 301
+
+[[redirects]]
+  from = "/app/*"
+  to = "/app/index.html"
+  status = 200
+
+# Site: páginas que não existem como arquivo caem no index (as de idioma já vêm prontas no build)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/app/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+
+# Arquivos com hash no nome podem ficar em cache por 1 ano
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/app/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

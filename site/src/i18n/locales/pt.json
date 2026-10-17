@@ -1,0 +1,253 @@
+{
+  "seo": {
+    "title": "StockFlex - Aluguel de Posições Pallet | Armazenagem Segura no Paraguai",
+    "description": "Alugue posições pallet com segurança 24h, monitoramento remoto e movimentação inclusa. A partir de U$ 7,00/mês. Ideal para empresas em expansão.",
+    "ogTitle": "StockFlex - Aluguel de Posições Pallet",
+    "ogDescription": "Armazene com segurança e flexibilidade. Soluções de aluguel de posições pallet para empresas que buscam otimizar custos."
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "pt": "PT",
+    "es": "ES"
+  },
+  "hero": {
+    "logoAlt": "StockFlex - Almacenaje bajo demanda",
+    "imageAlt": "Armazém moderno com sistema de porta-pallets organizados",
+    "title1": "Aluguel de",
+    "titleHighlight": "Posições Pallet",
+    "subtitle": "Armazene com Segurança e Flexibilidade",
+    "description": "Seu espaço de armazenagem extra, sem grandes investimentos.",
+    "location": "Ciudad del Este, Paraguai",
+    "badge1": "Segurança 24h",
+    "badge2": "Movimentação Inclusa",
+    "ctaQuote": "Solicitar Proposta Agora",
+    "ctaWhatsapp": "Falar pelo WhatsApp",
+    "ctaStructure": "Conheça Nossa Estrutura",
+    "stats1Number": "960",
+    "stats1Label": "Posições Disponíveis",
+    "stats2Label": "Monitoramento"
+  },
+  "targetAudience": {
+    "title": "Para quem é o Aluguel de Posições Pallet?",
+    "subtitle": "Nossa solução atende empresas que buscam flexibilidade, economia e eficiência em suas operações de armazenamento.",
+    "items": [
+      {
+        "title": "Empresas em Expansão",
+        "description": "Que precisam de mais espaço rapidamente, sem burocracia ou altos investimentos em infraestrutura própria."
+      },
+      {
+        "title": "Capacidade Limitada",
+        "description": "Com depósitos saturados ou gargalos de armazenamento, buscando uma solução ágil e eficiente para otimizar suas operações."
+      },
+      {
+        "title": "Foco em Redução de Custos",
+        "description": "Que desejam transformar custos fixos de armazenagem em variáveis, pagando apenas pelo espaço e serviço que realmente utilizam."
+      }
+    ]
+  },
+  "valueProposition": {
+    "title": "Nossa Proposta de Valor",
+    "subtitle": "Na StockFlex, oferecemos mais do que apenas espaço. Proporcionamos uma solução completa de armazenamento que garante segurança, eficiência e controle total sobre suas mercadorias.",
+    "comingSoon": "Em breve",
+    "items": [
+      {
+        "title": "Local Seguro e Monitorado",
+        "description": "Instalações com vigilância 24h, garantindo a integridade dos seus produtos."
+      },
+      {
+        "title": "Seguro Personalizado",
+        "description": "Cobertura específica para cada pallet, conforme o valor da sua mercadoria."
+      },
+      {
+        "title": "Movimentação Inclusa",
+        "description": "Uma movimentação (entrada/saída ou transferência) por pallet por mês já inclusa."
+      },
+      {
+        "title": "Monitoramento Remoto",
+        "description": "Acesso online às câmeras do seu espaço, 24 horas por dia, 7 dias por semana."
+      },
+      {
+        "title": "Controle de Acesso Rigoroso",
+        "description": "Sistema de segurança com biometria e operadores autorizados para garantir a proteção."
+      },
+      {
+        "title": "Check-in e Check-out Assistidos",
+        "description": "Procedimentos detalhados para garantir a precisão e a segurança nas entradas e saídas."
+      }
+    ]
+  },
+  "competitiveAdvantages": {
+    "title": "Vantagens Competitivas para Sua Empresa",
+    "subtitle": "O Aluguel de Posições Pallet da StockFlex é a solução estratégica para otimizar seus custos e operações logísticas.",
+    "items": [
+      {
+        "title": "Libere Espaço",
+        "description": "Otimize seu depósito atual, eliminando a necessidade de grandes investimentos em novas estruturas ou expansões."
+      },
+      {
+        "title": "Reduza Custos Fixos",
+        "description": "Pague apenas pelo espaço e serviço que realmente utiliza, sem custos fixos elevados de manutenção, segurança ou pessoal."
+      },
+      {
+        "title": "Segurança e Rastreabilidade",
+        "description": "Garanta a integridade das suas mercadorias com seguro, monitoramento 24h e total controle sobre as movimentações."
+      },
+      {
+        "title": "Acesso Rápido e Transparente",
+        "description": "Tenha visibilidade total das suas mercadorias e acesso facilitado a qualquer informação ou movimentação."
+      }
+    ]
+  },
+  "capacity": {
+    "title": "Capacidade e Estrutura",
+    "subtitle": "Nosso armazém é projetado para máxima eficiência e otimização de espaço, garantindo a segurança e o manuseio adequado de suas mercadorias.",
+    "stat1": "Posições",
+    "stat2": "Segurança",
+    "stat3": "Controle",
+    "tagline": "Nossa estrutura é sinônimo de segurança e eficiência para sua logística.",
+    "items": [
+      {
+        "title": "Otimização Vertical",
+        "description": "Sistema verticalizado em porta-pallets que maximiza o uso do espaço físico."
+      },
+      {
+        "title": "960 Posições Disponíveis",
+        "description": "Capacidade total que supera em muito a armazenagem horizontal tradicional."
+      },
+      {
+        "title": "Estrutura Segura",
+        "description": "Instalações projetadas para máxima segurança e integridade das mercadorias."
+      },
+      {
+        "title": "Controle Eficiente",
+        "description": "Sistema que facilita organização, controle de estoque e agilidade nas movimentações."
+      }
+    ]
+  },
+  "pricing": {
+    "title": "Condições Comerciais Flexíveis",
+    "subtitle": "Nossas condições foram pensadas para oferecer a máxima flexibilidade e previsibilidade de custos para sua operação.",
+    "planTitle": "Plano Padrão",
+    "planSubtitle": "Solução completa de armazenamento",
+    "perPosition": "/pos/mês + seguro* · IVA incl.",
+    "tier1Range": "de 1 a 79 posições pallet",
+    "tier2Range": "de 80 a 100 posições pallet",
+    "tier3Range": "mais de 100 posições pallet",
+    "negotiable": "*Pallet padrão 1,2 × 1,0 × 1,5 m. Menos de 10 posições ou contrato menor que 12 meses têm adicional por posição.",
+    "includedTitle": "Incluído no plano:",
+    "included": [
+      "Vigilância 24h",
+      "Monitoramento por câmeras",
+      "1 movimentação/mês por posição (não acumulável)",
+      "Seguro personalizado",
+      "Controle biométrico",
+      "Portal do cliente com estoque e comprovantes"
+    ],
+    "specsTitle": "Especificações:",
+    "specs": [
+      "A partir de 1 posição pallet",
+      "Contratos a partir de 1 mês; sem adicional a partir de 12 meses",
+      "Pallet padrão 1,2 × 1,0 × 1,5 m",
+      "Medida máxima por posição: 1,2 × 1,0 × 1,8 m",
+      "Capacidade total: 960 posições em porta-pallets seletivos",
+      "Operadores autorizados e procedimentos auditáveis"
+    ],
+    "ctaPersonalized": "Simular e baixar proposta",
+    "conditions": [
+      {
+        "label": "Prazo flexível",
+        "value": "A partir de 1 mês. Com 12 meses ou mais não há adicional de prazo; entre 6 e 11 meses, + US$ 0,50 por posição."
+      },
+      {
+        "label": "Quantidade",
+        "value": "A partir de 1 posição. Abaixo de 10 posições, + US$ 1,00 por posição; a partir de 80, a tarifa cai."
+      },
+      {
+        "label": "Movimentações",
+        "value": "1 por posição por mês. No mês da entrada e da saída, essa movimentação é a própria entrada ou saída. Movimentações adicionais: US$ 4,00 cada."
+      },
+      {
+        "label": "Frete",
+        "value": "O transporte da mercadoria até o depósito e de volta é por conta do cliente."
+      }
+    ],
+    "footer": "Entre em contato para um plano personalizado que se ajuste perfeitamente às suas necessidades de logística e orçamento."
+  },
+  "faq": {
+    "title": "Dúvidas Frequentes",
+    "subtitle": "Esclarecemos as principais questões sobre nosso serviço de aluguel de posições pallet.",
+    "items": [
+      {
+        "question": "Como é feito o seguro?",
+        "answer": "Oferecemos um seguro personalizado por pallet, com valor proporcional à mercadoria armazenada. Detalhes podem ser ajustados no contrato."
+      },
+      {
+        "question": "Posso visitar o armazém?",
+        "answer": "Sim, visitas podem ser agendadas para que você conheça nossa estrutura e equipe antes de contratar nossos serviços."
+      },
+      {
+        "question": "Qual o tempo de resposta para movimentações?",
+        "answer": "Priorizamos agilidade. As movimentações inclusas (1 por pallet/mês) são agendadas e executadas com eficiência para não atrasar sua cadeia de suprimentos."
+      },
+      {
+        "question": "Quem pode movimentar a mercadoria?",
+        "answer": "A movimentação interna é feita pela nossa equipe, porém a retirada ou inclusão no depósito só é executada mediante autorização do contratante."
+      },
+      {
+        "question": "Qual a quantidade mínima que posso contratar?",
+        "answer": "Você pode contratar a partir de 1 posição pallet e de 1 mês. Abaixo de 10 posições ou com contrato menor que 12 meses entra um adicional por posição; use o simulador para ver o preço exato."
+      },
+      {
+        "question": "Que tipo de mercadoria pode ser armazenada?",
+        "answer": "Mercadorias sem permissões especiais (senave, por exemplo) podem ser armazenadas. Não são permitidos, por exemplo, agroquímicos e material bélico."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Entre em Contato!",
+    "subtitle": "Saiba como reduzir custos de armazenagem hoje mesmo com a StockFlex Soluções em Armazenamento.",
+    "mainButton": "Solicitar Cotação Agora",
+    "quoteDialogTitle": "Solicitar Cotação",
+    "contactDialogTitle": "Entre em Contato",
+    "form": {
+      "name": "Nome",
+      "namePlaceholder": "Seu nome completo",
+      "company": "Empresa",
+      "companyPlaceholder": "Nome da empresa",
+      "email": "Email",
+      "emailPlaceholder": "seu@email.com",
+      "phone": "Telefone",
+      "phonePlaceholder": "(XX) XXXXX-XXXX",
+      "palletQuantity": "Quantidade estimada de pallets",
+      "palletQuantityPlaceholder": "Ex: 50 posições",
+      "message": "Mensagem adicional",
+      "messagePlaceholder": "Descreva suas necessidades específicas...",
+      "contactMessage": "Mensagem",
+      "contactMessagePlaceholder": "Como podemos ajudar você?",
+      "cancel": "Cancelar",
+      "send": "Enviar Solicitação",
+      "sendContact": "Enviar Mensagem",
+      "sending": "Enviando..."
+    },
+    "emailSubject": "Solicitação de Cotação - Aluguel de Posições Pallet",
+    "emailSubjectContact": "Contato - StockFlex Soluções em Armazenamento",
+    "emailBody": "Prezados,\n\nGostaria de solicitar uma cotação para aluguel de posições pallet com as seguintes informações:\n\nNome: {{name}}\nEmpresa: {{company}}\nEmail: {{email}}\nTelefone: {{phone}}\nQuantidade estimada de pallets: {{palletQuantity}}\n\nMensagem adicional:\n{{message}}\n\nAguardo retorno.\n\nAtenciosamente,\n{{name}}",
+    "emailBodyContact": "Prezados,\n\nGostaria de entrar em contato com vocês:\n\nNome: {{name}}\nEmpresa: {{company}}\nEmail: {{email}}\nTelefone: {{phone}}\n\nMensagem:\n{{message}}\n\nAguardo retorno.\n\nAtenciosamente,\n{{name}}",
+    "emailLabel": "Email",
+    "whatsappLabel": "WhatsApp",
+    "whatsappText": "Converse conosco",
+    "locationLabel": "Localização",
+    "locationText": "Agende uma visita",
+    "footerTitle": "StockFlex Soluções em Armazenamento",
+    "footerText": "Transformando a logística das empresas com soluções inteligentes de armazenamento. Flexibilidade, segurança e economia em um só lugar.",
+    "sentTitle": "Mensagem enviada!",
+    "sentDesc": "Recebemos sua solicitação de cotação. Nossa equipe entrará em contato em breve.",
+    "sentDescContact": "Recebemos sua mensagem. Nossa equipe entrará em contato em breve.",
+    "fallbackTitle": "Não foi possível enviar automaticamente",
+    "fallbackDesc": "Abrimos seu e-mail com a mensagem pronta. Se preferir, fale conosco pelo WhatsApp."
+  },
+  "notFound": {
+    "title": "Oops! Página não encontrada",
+    "back": "Voltar ao início"
+  }
+}

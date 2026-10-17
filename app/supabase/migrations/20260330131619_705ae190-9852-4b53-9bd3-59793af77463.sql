@@ -1,0 +1,9 @@
+ALTER PUBLICATION supabase_realtime ADD TABLE public.pallets;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.clients;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.contracts;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.invoices;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.expenses;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.extra_costs;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.authorized_contacts;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.client_requests;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.system_alerts;

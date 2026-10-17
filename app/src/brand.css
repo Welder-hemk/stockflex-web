@@ -1,0 +1,15 @@
+/* =====================================================================
+   Marca StockFlex — arquivo IGUAL no site e no app.
+   Cores tiradas do logo: azul #0C4774 e laranja #FC8711.
+   Alterou aqui? Copie o arquivo para o outro projeto.
+   ===================================================================== */
+:root {
+  --brand-navy: 206 81% 25%;        /* #0C4774 — texto "Stock", cor principal */
+  --brand-navy-deep: 208 80% 14%;   /* fundo do hero do site e barra lateral do app */
+  --brand-navy-soft: 206 50% 95%;   /* fundos suaves, realces */
+  --brand-orange: 30 98% 53%;       /* #FC8711 — texto "Flex", só na ação principal */
+  --brand-orange-strong: 26 95% 47%;/* laranja ao passar o mouse */
+  --brand-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --brand-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --brand-radius: 0.5rem;
+}

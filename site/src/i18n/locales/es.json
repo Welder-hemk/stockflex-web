@@ -1,0 +1,253 @@
+{
+  "seo": {
+    "title": "StockFlex - Alquiler de Posiciones Pallet en Paraguay | Almacenaje Seguro",
+    "description": "Alquile posiciones pallet con vigilancia 24h, monitoreo y movimientos incluidos. Desde U$ 7,00/mes. Solución flexible para empresas en crecimiento.",
+    "ogTitle": "StockFlex - Alquiler de Posiciones Pallet",
+    "ogDescription": "Almacene con seguridad y flexibilidad. Soluciones de alquiler de posiciones pallet para empresas que buscan optimizar costos logísticos."
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "pt": "PT",
+    "es": "ES"
+  },
+  "hero": {
+    "logoAlt": "StockFlex - Almacenaje bajo demanda",
+    "imageAlt": "Depósito moderno con sistema de racks selectivos organizados",
+    "title1": "Alquiler de",
+    "titleHighlight": "Posiciones Pallet",
+    "subtitle": "Almacene con Seguridad y Flexibilidad",
+    "description": "Su espacio de almacenaje adicional, sin grandes inversiones.",
+    "location": "Ciudad del Este, Paraguay",
+    "badge1": "Vigilancia 24h",
+    "badge2": "Movimientos Incluidos",
+    "ctaQuote": "Solicitar Propuesta Ahora",
+    "ctaWhatsapp": "Hablar por WhatsApp",
+    "ctaStructure": "Conozca Nuestras Instalaciones",
+    "stats1Number": "960",
+    "stats1Label": "Posiciones Disponibles",
+    "stats2Label": "Monitoreo"
+  },
+  "targetAudience": {
+    "title": "¿A quién está dirigido el Alquiler de Posiciones Pallet?",
+    "subtitle": "Nuestra solución está pensada para empresas que buscan flexibilidad, ahorro y eficiencia en sus operaciones de almacenaje.",
+    "items": [
+      {
+        "title": "Empresas en Crecimiento",
+        "description": "Que necesitan ampliar su capacidad de almacenaje rápidamente, sin trámites complejos ni grandes inversiones en infraestructura propia."
+      },
+      {
+        "title": "Capacidad Saturada",
+        "description": "Con depósitos al límite o cuellos de botella en su operación logística, que requieren una solución ágil y eficiente para liberar espacio."
+      },
+      {
+        "title": "Optimización de Costos",
+        "description": "Que buscan transformar costos fijos de almacenaje en costos variables, pagando únicamente por el espacio y los servicios que realmente utilizan."
+      }
+    ]
+  },
+  "valueProposition": {
+    "title": "Nuestra Propuesta de Valor",
+    "subtitle": "En StockFlex ofrecemos mucho más que espacio: brindamos una solución integral de almacenaje que garantiza seguridad, eficiencia y control total sobre su mercadería.",
+    "comingSoon": "Próximamente",
+    "items": [
+      {
+        "title": "Instalaciones Seguras y Monitoreadas",
+        "description": "Depósito con vigilancia 24 horas, garantizando la integridad de sus productos en todo momento."
+      },
+      {
+        "title": "Seguro Personalizado",
+        "description": "Cobertura específica por pallet, ajustada al valor declarado de su mercadería."
+      },
+      {
+        "title": "Movimientos Incluidos",
+        "description": "Un movimiento mensual por pallet (ingreso, egreso o transferencia) ya está incluido en el plan."
+      },
+      {
+        "title": "Monitoreo Remoto",
+        "description": "Acceso online a las cámaras de su espacio, las 24 horas, los 7 días de la semana."
+      },
+      {
+        "title": "Control de Acceso Riguroso",
+        "description": "Sistema de seguridad con biometría y operadores autorizados para garantizar la máxima protección."
+      },
+      {
+        "title": "Check-in y Check-out Asistidos",
+        "description": "Procedimientos auditables para garantizar precisión y trazabilidad en cada ingreso y egreso."
+      }
+    ]
+  },
+  "competitiveAdvantages": {
+    "title": "Ventajas Competitivas para Su Empresa",
+    "subtitle": "El Alquiler de Posiciones Pallet de StockFlex es la solución estratégica para optimizar sus costos y su operación logística.",
+    "items": [
+      {
+        "title": "Libere Espacio",
+        "description": "Optimice su depósito actual sin necesidad de grandes inversiones en nuevas estructuras o ampliaciones."
+      },
+      {
+        "title": "Reduzca Costos Fijos",
+        "description": "Pague únicamente por el espacio y los servicios que utiliza, sin altos costos fijos de mantenimiento, seguridad ni personal."
+      },
+      {
+        "title": "Seguridad y Trazabilidad",
+        "description": "Garantice la integridad de su mercadería con seguro, monitoreo 24h y control total de los movimientos."
+      },
+      {
+        "title": "Acceso Rápido y Transparente",
+        "description": "Tenga visibilidad total de su mercadería y acceso ágil a cualquier información o movimiento."
+      }
+    ]
+  },
+  "capacity": {
+    "title": "Capacidad e Infraestructura",
+    "subtitle": "Nuestro depósito está diseñado para máxima eficiencia y aprovechamiento del espacio, garantizando la seguridad y el manejo adecuado de su mercadería.",
+    "stat1": "Posiciones",
+    "stat2": "Seguridad",
+    "stat3": "Control",
+    "tagline": "Nuestra infraestructura es sinónimo de seguridad y eficiencia para su logística.",
+    "items": [
+      {
+        "title": "Aprovechamiento Vertical",
+        "description": "Sistema de racks selectivos que maximiza el uso del espacio físico en altura."
+      },
+      {
+        "title": "960 Posiciones Disponibles",
+        "description": "Capacidad total que supera ampliamente al almacenaje horizontal tradicional."
+      },
+      {
+        "title": "Estructura Segura",
+        "description": "Instalaciones diseñadas para garantizar la máxima seguridad e integridad de la mercadería."
+      },
+      {
+        "title": "Control Eficiente",
+        "description": "Sistema que facilita la organización, el control de stock y la agilidad en los movimientos."
+      }
+    ]
+  },
+  "pricing": {
+    "title": "Condiciones Comerciales Flexibles",
+    "subtitle": "Nuestras condiciones están diseñadas para ofrecer máxima flexibilidad y previsibilidad de costos a su operación.",
+    "planTitle": "Plan Estándar",
+    "planSubtitle": "Solución integral de almacenaje",
+    "perPosition": "/pos/mes + seguro* · IVA incl.",
+    "tier1Range": "de 1 a 79 posiciones pallet",
+    "tier2Range": "de 80 a 100 posiciones pallet",
+    "tier3Range": "más de 100 posiciones pallet",
+    "negotiable": "*Pallet estándar 1,2 × 1,0 × 1,5 m. Menos de 10 posiciones o contrato menor a 12 meses tienen adicional por posición.",
+    "includedTitle": "Incluido en el plan:",
+    "included": [
+      "Vigilancia 24h",
+      "Monitoreo por cámaras",
+      "1 movimiento/mes por posición (no acumulable)",
+      "Seguro personalizado",
+      "Control biométrico",
+      "Portal del cliente con stock y comprobantes"
+    ],
+    "specsTitle": "Especificaciones:",
+    "specs": [
+      "Desde 1 posición pallet",
+      "Contratos desde 1 mes; sin adicional desde 12 meses",
+      "Pallet estándar 1,2 × 1,0 × 1,5 m",
+      "Medida máxima por posición: 1,2 × 1,0 × 1,8 m",
+      "Capacidad total: 960 posiciones en racks selectivos",
+      "Operadores autorizados y procedimientos auditables"
+    ],
+    "ctaPersonalized": "Simular y descargar propuesta",
+    "conditions": [
+      {
+        "label": "Plazo flexible",
+        "value": "Desde 1 mes. Con 12 meses o más no hay adicional de plazo; entre 6 y 11 meses, + US$ 0,50 por posición."
+      },
+      {
+        "label": "Cantidad",
+        "value": "Desde 1 posición. Por debajo de 10 posiciones, + US$ 1,00 por posición; desde 80, la tarifa baja."
+      },
+      {
+        "label": "Movimientos",
+        "value": "1 por posición por mes. En el mes de ingreso y de salida, ese movimiento es el propio ingreso o salida. Movimientos adicionales: US$ 4,00 cada uno."
+      },
+      {
+        "label": "Flete",
+        "value": "El transporte de la mercadería hacia y desde el depósito está a cargo del cliente."
+      }
+    ],
+    "footer": "Contáctenos para diseñar un plan personalizado que se ajuste a sus necesidades logísticas y presupuesto."
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "subtitle": "Respondemos las principales consultas sobre nuestro servicio de alquiler de posiciones pallet.",
+    "items": [
+      {
+        "question": "¿Cómo funciona el seguro?",
+        "answer": "Ofrecemos un seguro personalizado por pallet, con un valor proporcional a la mercadería almacenada. Los detalles se definen en el contrato según sus necesidades."
+      },
+      {
+        "question": "¿Puedo visitar el depósito?",
+        "answer": "Sí. Coordinamos visitas con cita previa para que conozca nuestras instalaciones y a nuestro equipo antes de contratar el servicio."
+      },
+      {
+        "question": "¿Cuál es el tiempo de respuesta para los movimientos?",
+        "answer": "Priorizamos la agilidad. Los movimientos incluidos (1 por pallet/mes) se coordinan y ejecutan con eficiencia para no afectar su cadena de suministro."
+      },
+      {
+        "question": "¿Quién manipula la mercadería?",
+        "answer": "El movimiento interno lo realiza nuestro equipo capacitado. El ingreso o retiro del depósito se ejecuta únicamente con autorización expresa del contratante."
+      },
+      {
+        "question": "¿Cuál es la cantidad mínima a contratar?",
+        "answer": "Puede contratar desde 1 posición pallet y desde 1 mes. Por debajo de 10 posiciones o con contrato menor a 12 meses se suma un adicional por posición; use el simulador para ver el precio exacto."
+      },
+      {
+        "question": "¿Qué tipo de mercadería se puede almacenar?",
+        "answer": "Se admite mercadería que no requiera permisos especiales (por ejemplo, SENAVE). No se aceptan agroquímicos, material bélico ni productos peligrosos."
+      }
+    ]
+  },
+  "cta": {
+    "title": "¡Contáctenos!",
+    "subtitle": "Descubra hoy mismo cómo reducir sus costos de almacenaje con StockFlex Soluciones en Almacenaje.",
+    "mainButton": "Solicitar Cotización Ahora",
+    "quoteDialogTitle": "Solicitar Cotización",
+    "contactDialogTitle": "Contáctenos",
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Su nombre completo",
+      "company": "Empresa",
+      "companyPlaceholder": "Nombre de la empresa",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "su@email.com",
+      "phone": "Teléfono",
+      "phonePlaceholder": "(0XXX) XXX-XXX",
+      "palletQuantity": "Cantidad estimada de pallets",
+      "palletQuantityPlaceholder": "Ej: 50 posiciones",
+      "message": "Mensaje adicional",
+      "messagePlaceholder": "Cuéntenos sobre sus necesidades específicas...",
+      "contactMessage": "Mensaje",
+      "contactMessagePlaceholder": "¿En qué podemos ayudarle?",
+      "cancel": "Cancelar",
+      "send": "Enviar Solicitud",
+      "sendContact": "Enviar Mensaje",
+      "sending": "Enviando..."
+    },
+    "emailSubject": "Solicitud de Cotización - Alquiler de Posiciones Pallet",
+    "emailSubjectContact": "Contacto - StockFlex Soluciones en Almacenaje",
+    "emailBody": "Estimados,\n\nQuisiera solicitar una cotización para el alquiler de posiciones pallet con los siguientes datos:\n\nNombre: {{name}}\nEmpresa: {{company}}\nCorreo: {{email}}\nTeléfono: {{phone}}\nCantidad estimada de pallets: {{palletQuantity}}\n\nMensaje adicional:\n{{message}}\n\nQuedo a la espera de su respuesta.\n\nSaludos cordiales,\n{{name}}",
+    "emailBodyContact": "Estimados,\n\nMe gustaría ponerme en contacto con ustedes:\n\nNombre: {{name}}\nEmpresa: {{company}}\nCorreo: {{email}}\nTeléfono: {{phone}}\n\nMensaje:\n{{message}}\n\nQuedo a la espera de su respuesta.\n\nSaludos cordiales,\n{{name}}",
+    "emailLabel": "Correo electrónico",
+    "whatsappLabel": "WhatsApp",
+    "whatsappText": "Escríbanos ahora",
+    "locationLabel": "Ubicación",
+    "locationText": "Agende una visita",
+    "footerTitle": "StockFlex Soluciones en Almacenaje",
+    "footerText": "Transformamos la logística de las empresas con soluciones inteligentes de almacenaje. Flexibilidad, seguridad y ahorro en un solo lugar.",
+    "sentTitle": "¡Mensaje enviado!",
+    "sentDesc": "Recibimos su solicitud de cotización. Nuestro equipo se pondrá en contacto pronto.",
+    "sentDescContact": "Recibimos su mensaje. Nuestro equipo se pondrá en contacto pronto.",
+    "fallbackTitle": "No fue posible enviar automáticamente",
+    "fallbackDesc": "Abrimos su correo con el mensaje listo. Si prefiere, contáctenos por WhatsApp."
+  },
+  "notFound": {
+    "title": "¡Ups! Página no encontrada",
+    "back": "Volver al inicio"
+  }
+}

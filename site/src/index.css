@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import './brand.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: var(--brand-navy);
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 50% 96%;
+    --secondary-foreground: 214 91% 27%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: var(--brand-navy);
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: var(--brand-navy);
+
+    /* Custom design tokens */
+    --industrial-blue: var(--brand-navy-deep);
+    --industrial-orange: var(--brand-orange);
+    --warehouse-gray: 210 20% 95%;
+    --text-gray: 215 15% 35%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-navy-deep)), hsl(var(--brand-navy)));
+    --gradient-section: linear-gradient(180deg, hsl(210 50% 98%), hsl(210 40% 96%));
+    
+    /* Shadows */
+    --shadow-card: 0 4px 20px -2px hsl(214 91% 27% / 0.1);
+    --shadow-hero: 0 25px 50px -12px hsl(220 85% 25% / 0.3);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 220 85% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 50% 15%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 50% 15%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 214 91% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 30% 20%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 30% 20%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 214 91% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 30% 25%;
+    --input: 220 30% 25%;
+    --ring: 214 91% 40%;
+
+    /* Dark mode custom tokens */
+    --industrial-blue: 220 85% 35%;
+    --warehouse-gray: 220 20% 25%;
+    --text-gray: 215 15% 75%;
+    
+    --gradient-hero: linear-gradient(135deg, hsl(220 85% 15%), hsl(214 91% 25%));
+    --gradient-section: linear-gradient(180deg, hsl(220 50% 12%), hsl(220 30% 15%));
+    
+    --shadow-card: 0 4px 20px -2px hsl(0 0% 0% / 0.3);
+    --shadow-hero: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--brand-font);
+  }
+
+  /* Custom keyframes for animations - GPU optimized */
+  @keyframes fadeIn {
+    0% { 
+      opacity: 0; 
+      transform: translate3d(0, 20px, 0); 
+      will-change: opacity, transform;
+    }
+    100% { 
+      opacity: 1; 
+      transform: translate3d(0, 0, 0); 
+      will-change: auto;
+    }
+  }
+
+  @keyframes slideUp {
+    0% { 
+      opacity: 0; 
+      transform: translate3d(0, 40px, 0);
+      will-change: opacity, transform;
+    }
+    100% { 
+      opacity: 1; 
+      transform: translate3d(0, 0, 0);
+      will-change: auto;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { 
+      transform: translate3d(0, 0, 0);
+      will-change: transform;
+    }
+    50% { 
+      transform: translate3d(0, -10px, 0);
+    }
+  }
+
+  /* Performance optimizations for animated elements */
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-float {
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
