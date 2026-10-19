@@ -20,17 +20,16 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Chaves do projeto: aceita as chaves novas (sb_secret_…) e as antigas (service_role)
+    // Chaves do projeto: usa a service_role (sempre disponível) e, se faltar, a chave secreta nova
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const pickKey = (jsonVar: string, legacyVar: string) => {
+    let supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+    if (!supabaseServiceKey) {
       try {
-        const keys = JSON.parse(Deno.env.get(jsonVar) || "{}");
-        const first = keys.default || Object.values(keys)[0];
-        if (first) return first as string;
+        const keys = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS") || "{}");
+        const k = keys.default ?? Object.values(keys)[0];
+        supabaseServiceKey = typeof k === "string" ? k : (k?.api_key ?? k?.key ?? "");
       } catch { /* ignora */ }
-      return Deno.env.get(legacyVar) || "";
-    };
-    const supabaseServiceKey = pickKey("SUPABASE_SECRET_KEYS", "SUPABASE_SERVICE_ROLE_KEY");
+    }
     if (!supabaseServiceKey) {
       return new Response(JSON.stringify({ error: "Função sem chave secreta do projeto" }), {
         status: 500,
@@ -39,15 +38,18 @@ Deno.serve(async (req) => {
     }
     const adminClient = createClient(supabaseUrl, supabaseServiceKey, { auth: { persistSession: false } });
 
-    // Quem está chamando? (valida o token da sessão no próprio Supabase)
-    const { data: callerData, error: callerErr } = await adminClient.auth.getUser(authHeader.replace("Bearer ", ""));
-    if (callerErr || !callerData?.user) {
-      return new Response(JSON.stringify({ error: "Sessão inválida: entre novamente" }), {
+    // Quem está chamando? Pergunta ao serviço de login do próprio Supabase
+    const who = await fetch(`${supabaseUrl}/auth/v1/user`, {
+      headers: { apikey: supabaseServiceKey, Authorization: authHeader },
+    });
+    if (!who.ok) {
+      const detail = await who.text().catch(() => "");
+      return new Response(JSON.stringify({ error: `Sessão inválida (${who.status}): ${detail.slice(0, 200)}` }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    const callerId = callerData.user.id;
+    const callerId = (await who.json()).id as string;
 
     // Somente administradores
     const { data: roleCheck } = await adminClient
