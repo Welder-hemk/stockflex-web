@@ -20,29 +20,36 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Verify caller is admin
+    // Chaves do projeto: aceita as chaves novas (sb_secret_…) e as antigas (service_role)
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const pickKey = (jsonVar: string, legacyVar: string) => {
+      try {
+        const keys = JSON.parse(Deno.env.get(jsonVar) || "{}");
+        const first = keys.default || Object.values(keys)[0];
+        if (first) return first as string;
+      } catch { /* ignora */ }
+      return Deno.env.get(legacyVar) || "";
+    };
+    const supabaseServiceKey = pickKey("SUPABASE_SECRET_KEYS", "SUPABASE_SERVICE_ROLE_KEY");
+    if (!supabaseServiceKey) {
+      return new Response(JSON.stringify({ error: "Função sem chave secreta do projeto" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const adminClient = createClient(supabaseUrl, supabaseServiceKey, { auth: { persistSession: false } });
 
-    const callerClient = createClient(supabaseUrl, supabaseAnonKey, {
-      global: { headers: { Authorization: authHeader } },
-    });
-
-    const { data: claimsData, error: claimsError } = await callerClient.auth.getClaims(
-      authHeader.replace("Bearer ", "")
-    );
-    if (claimsError || !claimsData?.claims) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+    // Quem está chamando? (valida o token da sessão no próprio Supabase)
+    const { data: callerData, error: callerErr } = await adminClient.auth.getUser(authHeader.replace("Bearer ", ""));
+    if (callerErr || !callerData?.user) {
+      return new Response(JSON.stringify({ error: "Sessão inválida: entre novamente" }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+    const callerId = callerData.user.id;
 
-    const callerId = claimsData.claims.sub as string;
-
-    // Check admin role
-    const adminClient = createClient(supabaseUrl, supabaseServiceKey);
+    // Somente administradores
     const { data: roleCheck } = await adminClient
       .from("user_roles")
       .select("role")

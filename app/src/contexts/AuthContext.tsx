@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
@@ -276,7 +277,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const invokeManageUsers = async (body: any) => {
     const { data, error } = await supabase.functions.invoke("manage-users", { body });
-    if (error) throw new Error(error.message);
+    if (error) {
+      // Mostra a mensagem real da função (ex.: "Forbidden: admin only") em vez do erro genérico
+      let msg = error.message;
+      try { const j = await (error as { context?: Response }).context?.json(); if (j?.error) msg = j.error; } catch { /* sem corpo */ }
+      throw new Error(msg);
+    }
     if (data?.error) throw new Error(data.error);
     return data;
   };
@@ -287,6 +293,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUsers(data.users || []);
     } catch (e) {
       console.error("Failed to load users:", e);
+      toast.error("No se pudo cargar la lista de usuarios", { description: (e as Error).message });
     }
   }, []);
 
