@@ -6,8 +6,8 @@ const ValueProposition = () => {
   const { t } = useTranslation();
   const items = t("valueProposition.items", { returnObjects: true }) as Array<{ title: string; description: string }>;
   const icons = [Shield, ClipboardCheck, Truck, Camera, Lock, Eye];
-  // Items 3, 4, 5 (Monitoramento Remoto, Controle de Acesso, Check-in/out) get "coming soon"
-  const comingSoonIdx = new Set([3, 5]);
+  // Itens com faixa "em breve" (nenhum no momento)
+  const comingSoonIdx = new Set<number>();
 
   return (
     <section id="propuesta" className="py-20 bg-background">

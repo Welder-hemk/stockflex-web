@@ -163,10 +163,12 @@ const CTA = () => {
 
           {/* Highlight: Acesso ao Sistema de Gestão (diferencial) */}
           <div className="mb-12">
+            {/* selo fora do cartão: com overflow-hidden ele ficava cortado */}
+            <div className="relative pt-3">
+            <div className="absolute top-0 left-6 z-10 bg-industrial-orange text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide shadow-md">
+              {lang === "pt" ? "Diferencial Exclusivo" : "Diferencial Exclusivo"}
+            </div>
             <div className="relative overflow-hidden rounded-2xl bg-white shadow-2xl border-4 border-industrial-orange/80">
-              <div className="absolute -top-3 left-6 bg-industrial-orange text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide shadow-md">
-                {lang === "pt" ? "Diferencial Exclusivo" : "Diferencial Exclusivo"}
-              </div>
               <div className="grid md:grid-cols-[1fr_auto] gap-6 items-center p-6 md:p-8">
                 <div className="text-left">
                   <div className="flex items-center gap-3 mb-3">
@@ -209,6 +211,7 @@ const CTA = () => {
                   <ExternalLink className="w-4 h-4 opacity-80 group-hover:translate-x-0.5 transition-transform" />
                 </a>
               </div>
+            </div>
             </div>
           </div>
 

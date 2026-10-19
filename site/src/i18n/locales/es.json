@@ -18,7 +18,7 @@
     "subtitle": "Almacene con Seguridad y Flexibilidad",
     "description": "Su espacio de almacenaje adicional, sin grandes inversiones.",
     "location": "Ciudad del Este, Paraguay",
-    "badge1": "Vigilancia 24h",
+    "badge1": "Monitoreo 24h",
     "badge2": "Movimientos Incluidos",
     "ctaQuote": "Solicitar Propuesta Ahora",
     "ctaWhatsapp": "Hablar por WhatsApp",
@@ -64,15 +64,15 @@
       },
       {
         "title": "Monitoreo Remoto",
-        "description": "Acceso online a las cámaras de su espacio, las 24 horas, los 7 días de la semana."
+        "description": "Cámaras las 24 horas del día, los 7 días de la semana."
       },
       {
         "title": "Control de Acceso Riguroso",
-        "description": "Sistema de seguridad con biometría y operadores autorizados para garantizar la máxima protección."
+        "description": "Sistema de control de ingreso y salida de materiales con comprobantes y verificación de las personas autorizadas por el cliente."
       },
       {
-        "title": "Check-in y Check-out Asistidos",
-        "description": "Procedimientos auditables para garantizar precisión y trazabilidad en cada ingreso y egreso."
+        "title": "Check-in y Check-out",
+        "description": "Procedimientos internos para garantizar la seguridad en el ingreso y egreso de materiales."
       }
     ]
   },

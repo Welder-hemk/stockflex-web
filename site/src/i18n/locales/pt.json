@@ -18,7 +18,7 @@
     "subtitle": "Armazene com Segurança e Flexibilidade",
     "description": "Seu espaço de armazenagem extra, sem grandes investimentos.",
     "location": "Ciudad del Este, Paraguai",
-    "badge1": "Segurança 24h",
+    "badge1": "Monitorado 24h",
     "badge2": "Movimentação Inclusa",
     "ctaQuote": "Solicitar Proposta Agora",
     "ctaWhatsapp": "Falar pelo WhatsApp",
@@ -64,15 +64,15 @@
       },
       {
         "title": "Monitoramento Remoto",
-        "description": "Acesso online às câmeras do seu espaço, 24 horas por dia, 7 dias por semana."
+        "description": "Câmeras 24 horas por dia, 7 dias por semana."
       },
       {
         "title": "Controle de Acesso Rigoroso",
-        "description": "Sistema de segurança com biometria e operadores autorizados para garantir a proteção."
+        "description": "Sistema de controle de entrada e saída de materiais com recibos e verificação dos agentes autorizados pelo cliente."
       },
       {
-        "title": "Check-in e Check-out Assistidos",
-        "description": "Procedimentos detalhados para garantir a precisão e a segurança nas entradas e saídas."
+        "title": "Check-in e Check-out",
+        "description": "Procedimentos internos para garantir segurança na entrada e saída de materiais."
       }
     ]
   },
