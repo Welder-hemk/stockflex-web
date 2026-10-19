@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Loader2, PackagePlus, Printer, MapPin, AlertTriangle, RotateCcw, Layers } from "lucide-react";
 import BatchEntryDialog from "./BatchEntryDialog";
+import PositionPicker from "./PositionPicker";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -238,13 +239,14 @@ export default function EntryPanel({ autoPrint, initialPosition }: { autoPrint: 
 
             <div className="rounded-lg border p-3 grid gap-2">
               <Label htmlFor="in-pos" className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> Posición</Label>
-              <div className="flex gap-2 items-center">
-                <Input
-                  className="h-11 font-mono text-lg uppercase max-w-[180px]"
-                  value={posicao.startsWith(`${currentWarehouse?.code}:`) ? positionCode(posicao) : posicao}
-                  onChange={(e) => { setPosicao(e.target.value ? resolvePositionId(e.target.value, currentWarehouse?.code) : ""); setPosTouched(true); }}
+              <div className="flex flex-wrap gap-2 items-center">
+                <PositionPicker
                   id="in-pos"
-                  placeholder="A-01-1-1"
+                  value={posicao}
+                  suggested={suggested}
+                  peso={pesoNum}
+                  needPair={duplo}
+                  onChange={(v, manual) => { setPosicao(v); setPosTouched(manual); }}
                 />
                 {pos2 && <span className="font-mono text-muted-foreground">+ {positionLabel(pos2.id, multiWarehouse)}</span>}
                 {posTouched && suggested && suggested !== posicao && (
@@ -253,6 +255,7 @@ export default function EntryPanel({ autoPrint, initialPosition }: { autoPrint: 
                   </Button>
                 )}
               </div>
+              {!posTouched && posicao && <p className="text-xs text-muted-foreground">Sugerida por el sistema{pesoNum > 1000 ? " (pallet pesado: nivel del suelo)" : ""}. Puede escribir, escanear o elegir otra.</p>}
               {clienteId && posError && <p className="text-sm text-destructive">{posError}</p>}
               {!posError && posicao && !isPositionCode(posicao) && <p className="text-xs text-muted-foreground">Formato esperado: calle-bloque-nivel-posición (A-01-1-1)</p>}
               {heavyHigh && (

@@ -15,7 +15,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useStockData } from "@/contexts/StockDataContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { rpcRegisterPalletEntry } from "@/data/dbMutations";
-import { printMovements, resolvePositionId } from "@/data/operations";
+import { printMovements } from "@/data/operations";
+import PositionPicker from "./PositionPicker";
 import { isGroundPosition, positionCode, positionLabel, type WarehousePosition } from "@/data/types";
 import { parseDbError } from "@/lib/errorMessages";
 import { formatNumber, parseDecimal } from "@/lib/formatters";
@@ -294,7 +295,7 @@ export default function BatchEntryDialog({ open, onOpenChange, initialClienteId 
                 <th className="p-2 text-left w-28">Valor decl. (US$)</th>
                 <th className="p-2 text-center w-20">Pallet doble</th>
                 <th className="p-2 text-center w-20">Con seguro</th>
-                <th className="p-2 text-left w-36">Posición</th>
+                <th className="p-2 text-left w-44">Posición</th>
                 <th className="p-2 w-10"></th>
               </tr>
             </thead>
@@ -322,10 +323,14 @@ export default function BatchEntryDialog({ open, onOpenChange, initialClienteId 
                     <td className="p-1.5 pt-3 text-center"><Switch checked={r.seguro} onCheckedChange={(v) => update(r.key, { seguro: v })} aria-label="Con seguro" /></td>
                     <td className="p-1.5">
                       <div className="flex items-center gap-1">
-                        <Input
-                          className={cn("h-9 font-mono uppercase", issue && issue !== "Peso" && "border-destructive")}
-                          value={posText(r.posicao)}
-                          onChange={(e) => update(r.key, { posicao: e.target.value ? resolvePositionId(e.target.value, currentWarehouse?.code) : "", manual: true })}
+                        <PositionPicker
+                          compact
+                          value={r.posicao}
+                          peso={num(r.peso)}
+                          needPair={r.duplo}
+                          exclude={new Set(rows.filter((o) => o.key !== r.key && !o.done).flatMap((o) => [o.posicao, o.posicao2]).filter(Boolean))}
+                          inputClassName={cn(issue && issue !== "Peso" && "border-destructive")}
+                          onChange={(v) => update(r.key, { posicao: v, manual: true })}
                           onKeyDown={onKey(i, false)}
                         />
                         {r.manual && <button type="button" title="Volver a la sugerida" onClick={() => update(r.key, { manual: false })}><RotateCcw className="h-3.5 w-3.5 text-muted-foreground" /></button>}
