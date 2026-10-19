@@ -26,3 +26,12 @@
 ## Pendente de decisão
 - Texto definitivo do contrato (revisão jurídica).
 - Comissão incide sobre recargos? Estorno se o cliente sair cedo?
+
+## Adendas (19/10/2026)
+- Mais posições durante a vigência = adenda ao contrato original; termina junto com ele e se consolida na renovação.
+- Preço da adenda vale só para as posições adicionais (sugerido pela tabela para o total resultante).
+- Comissão do agente: só sobre o primeiro contrato — adendas não geram comissão.
+- Conta para faturamento e capacidade desde a data de início, uma vez emitida para firma. No mês de início, proporcional aos dias; se esse mês já tinha sido faturado, o trecho entra na fatura seguinte (uma única vez).
+- Excedente: compara o pico diário com o contratado vigente em cada dia (contrato + adendas).
+- Fluxo: Comercial › Clientes › Contratos › ícone "Adenda" → criar (borrador) → emitir → cliente aceita no portal ou assina e anexa (tipo "Adenda") → gestão valida a firma. Anular exige motivo (faturas já emitidas se corrigem com nota de crédito).
+- Migração: 20261019100000_adendas.sql.

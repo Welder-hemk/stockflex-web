@@ -112,3 +112,21 @@ export function contractHtml(text: string): string {
   if (list) out.push("</ul>");
   return out.join("\n");
 }
+
+/** Campos de la adenda (además de los del contrato) */
+export function amendmentValues(
+  a: { numero: string; fechaInicio: string; posiciones: number; precio: number },
+  c: Contract, cl: Client | undefined, s: Settings, previousExtra: number, emision = new Date(),
+): Record<string, string> {
+  const anteriores = c.posicoesContratadas + previousExtra;
+  return {
+    ...contractValues(c, cl, s, emision),
+    "adenda.numero": a.numero,
+    "adenda.fecha_inicio": formatDate(a.fechaInicio),
+    "adenda.posiciones": String(a.posiciones),
+    "adenda.posiciones_anteriores": String(anteriores),
+    "adenda.total_posiciones": String(anteriores + a.posiciones),
+    "adenda.precio": formatMoney(a.precio, c.moeda),
+    "adenda.mensualidad": formatMoney(a.posiciones * a.precio, c.moeda),
+  };
+}

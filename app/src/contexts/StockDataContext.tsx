@@ -5,6 +5,8 @@ import {
   mapClientRequest, mapExpense, mapWarehouse,
 } from "@/data/supabaseData";
 import { useTableQuery } from "@/hooks/use-table-query";
+import { mapAmendment, amendmentCounts, type Amendment } from "@/data/amendments";
+import { todayLocal } from "@/lib/dates";
 import type {
   Client, Contract, Pallet, AuthorizedContact,
   Invoice, ExtraCost, WarehousePosition, SystemAlert, ClientRequest, Expense, Warehouse,
@@ -27,6 +29,8 @@ export interface StockDataContextType {
   expenses: Expense[];
   warehouses: Warehouse[];
   /** Depósito em que o usuário está trabalhando (operação e mapa) */
+  /** Adendas de contrato (gestión ve todas; el cliente, las suyas emitidas) */
+  amendments: Amendment[];
   currentWarehouseId: string;
   setCurrentWarehouseId: (id: string) => void;
   currentWarehouse: Warehouse | null;
@@ -61,7 +65,17 @@ export function StockDataProvider({ children }: { children: ReactNode }) {
   useRealtimeSync();
 
   const { data: clients = [], isLoading: l1 } = useTableQuery('clients', mapClient, enabled);
-  const { data: contracts = [], isLoading: l2 } = useTableQuery('contracts', mapContract, enabled);
+  const { data: baseContracts = [], isLoading: l2 } = useTableQuery('contracts', mapContract, enabled);
+  const { data: amendments = [] } = useTableQuery('contract_amendments', mapAmendment, enabled);
+  // Contratos con las posiciones de las adendas vigentes hoy
+  const contracts = useMemo(() => {
+    const today = todayLocal();
+    return baseContracts.map((c) => {
+      const vig = amendments.filter((a) => a.contratoId === c.id && amendmentCounts(a) && a.fechaInicio <= today);
+      if (!vig.length) return c;
+      return { ...c, posicoesAdicionais: vig.reduce((s, a) => s + a.posiciones, 0), valorAdicional: vig.reduce((s, a) => s + a.posiciones * a.precio, 0) };
+    });
+  }, [baseContracts, amendments]);
   const { data: pallets = [], isLoading: l3 } = useTableQuery('pallets', mapPallet, enabled);
   const { data: authorizedContacts = [], isLoading: l5 } = useTableQuery('authorized_contacts', mapAuthorizedContact, enabled);
   const { data: invoices = [], isLoading: l6 } = useTableQuery('invoices', mapInvoice, enabled);
@@ -175,7 +189,7 @@ export function StockDataProvider({ children }: { children: ReactNode }) {
 
   return (
     <StockDataContext.Provider value={{
-      clients, contracts, pallets, authorizedContacts,
+      clients, contracts, amendments, pallets, authorizedContacts,
       invoices, extraCosts, warehousePositions, systemAlerts,
       clientRequests, expenses, warehouses, currentWarehouseId, setCurrentWarehouseId,
       currentWarehouse, currentPositions, multiWarehouse, loading, refresh, refreshTable,

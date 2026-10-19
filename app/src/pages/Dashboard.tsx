@@ -4,7 +4,7 @@ import StatusBadge from "@/components/shared/StatusBadge";
 import { useStockData } from "@/contexts/StockDataContext";
 import { useDashboardStats, useDashboardOccupancy, useDashboardFinancial } from "@/hooks/use-dashboard-stats";
 import { supabase } from "@/integrations/supabase/client";
-import { positionLabel } from "@/data/types";
+import { contractTotalPositions, positionLabel } from "@/data/types";
 import { formatDate, formatDateTime } from "@/lib/dates";
 import { Textarea } from "@/components/ui/textarea";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
@@ -44,7 +44,7 @@ export default function Dashboard() {
   const pendingMovements = stats?.pending_movements ?? 0;
 
   const activeContracts = contracts.filter(c => c.status === 'ativo');
-  const reservedCount = activeContracts.reduce((s, c) => s + c.posicoesContratadas, 0);
+  const reservedCount = activeContracts.reduce((s, c) => s + contractTotalPositions(c), 0);
   const freeForContract = Math.max(0, totalCapacity - blockedCount - reservedCount);
   const freePhysical = totalCapacity - occupiedCount - blockedCount;
   const occupancyRate = totalCapacity > 0 ? ((occupiedCount / totalCapacity) * 100).toFixed(2) : '0.00';
@@ -364,9 +364,9 @@ export default function Dashboard() {
               contracts.filter(c => c.status === 'ativo').forEach(c => {
                 const contractPalletIds = pallets.filter(p => p.contratoId === c.id && p.status === 'armazenado').map(p => p.id);
                 const contractOccupied = warehousePositions.filter(p => p.status === 'occupied' && p.palletId && contractPalletIds.includes(p.palletId)).length;
-                if (contractOccupied > c.posicoesContratadas) {
+                if (contractOccupied > contractTotalPositions(c)) {
                   const client = clients.find(cl => cl.id === c.clienteId);
-                  alerts.push({ msg: `Contrato ${c.numero} (${client?.nomeFantasia}): ${contractOccupied}/${c.posicoesContratadas} posiciones — expansión contractual necesaria`, type: 'warning' });
+                  alerts.push({ msg: `Contrato ${c.numero} (${client?.nomeFantasia}): ${contractOccupied}/${contractTotalPositions(c)} posiciones — expansión contractual necesaria`, type: 'warning' });
                 }
               });
               if (alerts.length === 0) {

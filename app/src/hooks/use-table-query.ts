@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-type TableName = 'clients' | 'contracts' | 'pallets' | 'movements' | 'authorized_contacts' | 'invoices' | 'extra_costs' | 'warehouse_positions' | 'system_alerts' | 'client_requests' | 'expenses' | 'warehouses';
+type TableName = 'clients' | 'contracts' | 'pallets' | 'movements' | 'authorized_contacts' | 'invoices' | 'extra_costs' | 'warehouse_positions' | 'system_alerts' | 'client_requests' | 'expenses' | 'warehouses' | 'contract_amendments';
 
 const TABLE_ORDER: Record<TableName, { col: string; asc: boolean }> = {
   clients: { col: 'created_at', asc: true },
@@ -16,6 +16,7 @@ const TABLE_ORDER: Record<TableName, { col: string; asc: boolean }> = {
   client_requests: { col: 'data_criacao', asc: false },
   expenses: { col: 'created_at', asc: true },
   warehouses: { col: 'code', asc: true },
+  contract_amendments: { col: 'created_at', asc: true },
 };
 
 async function fetchAllRows(table: TableName) {

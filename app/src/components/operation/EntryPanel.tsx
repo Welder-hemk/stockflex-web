@@ -14,6 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { rpcRegisterPalletEntry } from "@/data/dbMutations";
 import { isPositionCode, normalizeScan, printMovements, resolvePositionId } from "@/data/operations";
 import { isGroundPosition } from "@/data/types";
+import { contractTotalPositions } from "@/data/types";
 import { parseDbError } from "@/lib/errorMessages";
 import { formatNumber, parseDecimal } from "@/lib/formatters";
 import { positionCode, positionLabel } from "@/data/types";
@@ -105,7 +106,7 @@ export default function EntryPanel({ autoPrint, initialPosition }: { autoPrint: 
   const heavyHigh = pesoNum > 1200 && !!posicao && !isGroundPosition(posicao);
 
   const contract = contracts.find((c) => c.id === contratoId);
-  const overContract = contract ? contract.posicoesOcupadas + (duplo ? 2 : 1) > contract.posicoesContratadas : false;
+  const overContract = contract ? contract.posicoesOcupadas + (duplo ? 2 : 1) > contractTotalPositions(contract) : false;
 
   const canSave = !!clienteId && !!contratoId && pesoNum > 0 && !posError && (!heavyHigh || heavyOk) && !saving;
 
@@ -198,7 +199,7 @@ export default function EntryPanel({ autoPrint, initialPosition }: { autoPrint: 
                   <SelectContent>
                     {activeContracts.map((c) => (
                       <SelectItem key={c.id} value={c.id}>
-                        {c.numero} · {c.posicoesOcupadas}/{c.posicoesContratadas} pos.
+                        {c.numero} · {c.posicoesOcupadas}/{contractTotalPositions(c)} pos.
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -265,7 +266,7 @@ export default function EntryPanel({ autoPrint, initialPosition }: { autoPrint: 
                 </label>
               )}
               {overContract && (
-                <p className="text-sm text-amber-700"><AlertTriangle className="inline h-4 w-4 mr-1" />Supera las posiciones contratadas ({contract?.posicoesContratadas}). Se registrará como excedente.</p>
+                <p className="text-sm text-amber-700"><AlertTriangle className="inline h-4 w-4 mr-1" />Supera las posiciones contratadas ({contract ? contractTotalPositions(contract) : 0}). Se registrará como excedente.</p>
               )}
             </div>
 

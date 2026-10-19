@@ -17,7 +17,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { rpcRegisterPalletEntry } from "@/data/dbMutations";
 import { printMovements } from "@/data/operations";
 import PositionPicker from "./PositionPicker";
-import { isGroundPosition, positionCode, positionLabel, type WarehousePosition } from "@/data/types";
+import { contractTotalPositions, isGroundPosition, positionCode, positionLabel, type WarehousePosition } from "@/data/types";
 import { parseDbError } from "@/lib/errorMessages";
 import { formatNumber, parseDecimal } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
@@ -188,7 +188,7 @@ export default function BatchEntryDialog({ open, onOpenChange, initialClienteId 
   const totalPeso = pending.reduce((s, r) => s + num(r.peso), 0);
   const totalPos = pending.reduce((s, r) => s + (r.duplo ? 2 : 1), 0);
   const contract = contracts.find((c) => c.id === contratoId);
-  const over = contract ? contract.posicoesOcupadas + totalPos - contract.posicoesContratadas : 0;
+  const over = contract ? contract.posicoesOcupadas + totalPos - contractTotalPositions(contract) : 0;
   const canSave = !!clienteId && !!contratoId && pending.length > 0 && issues === 0 && (heavyHigh === 0 || heavyOk) && !saving;
 
   async function save() {
@@ -278,7 +278,7 @@ export default function BatchEntryDialog({ open, onOpenChange, initialClienteId 
             <Label>Contrato *</Label>
             <Select value={contratoId} onValueChange={setContratoId} disabled={!clienteId || doneIds.length > 0}>
               <SelectTrigger><SelectValue placeholder={clienteId && !activeContracts.length ? "Sin contrato activo" : "Contrato"} /></SelectTrigger>
-              <SelectContent>{activeContracts.map((c) => <SelectItem key={c.id} value={c.id}>{c.numero} · {c.posicoesOcupadas}/{c.posicoesContratadas} pos.</SelectItem>)}</SelectContent>
+              <SelectContent>{activeContracts.map((c) => <SelectItem key={c.id} value={c.id}>{c.numero} · {c.posicoesOcupadas}/{contractTotalPositions(c)} pos.</SelectItem>)}</SelectContent>
             </Select>
           </div>
         </div>
@@ -386,7 +386,7 @@ export default function BatchEntryDialog({ open, onOpenChange, initialClienteId 
               {doneIds.length > 0 && <span className="text-success">{doneIds.length} ya registrados</span>}
               {issues > 0 && <span className="text-destructive">{issues} fila(s) con problemas</span>}
             </div>
-            {over > 0 && <p className="text-amber-700"><AlertTriangle className="inline h-4 w-4 mr-1" />Con este ingreso el cliente supera en {over} las posiciones contratadas ({contract?.posicoesContratadas}). Se cobrará como excedente.</p>}
+            {over > 0 && <p className="text-amber-700"><AlertTriangle className="inline h-4 w-4 mr-1" />Con este ingreso el cliente supera en {over} las posiciones contratadas ({contract ? contractTotalPositions(contract) : 0}). Se cobrará como excedente.</p>}
             {heavyHigh > 0 && (
               <label className="flex items-start gap-2 text-amber-700 bg-amber-50 border border-amber-200 rounded p-2">
                 <input type="checkbox" className="mt-0.5" checked={heavyOk} onChange={(e) => setHeavyOk(e.target.checked)} />

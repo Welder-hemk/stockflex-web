@@ -4,7 +4,7 @@ import { useStockData } from "@/contexts/StockDataContext";
 import { dbUpdateClient } from "@/data/dbMutations";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-import { Search, Plus, FileSignature, Pencil, XCircle, UserX, UserCheck } from "lucide-react";
+import { Search, Plus, FileSignature, FilePlus2, Pencil, XCircle, UserX, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import StatusBadge from "@/components/shared/StatusBadge";
@@ -16,15 +16,18 @@ import { motion } from "framer-motion";
 import ClientForm from "@/components/forms/ClientForm";
 import ContractForm from "@/components/forms/ContractForm";
 import ContractDocDialog from "@/components/contracts/ContractDocDialog";
+import AmendmentDialog from "@/components/contracts/AmendmentDialog";
+import { amendmentCounts } from "@/data/amendments";
+import { todayLocal } from "@/lib/dates";
 import { DocStateBadge } from "@/components/contracts/ContractFiles";
 import { formatMoney } from "@/lib/formatters";
 import { toast } from "sonner";
 import { parseDbError } from "@/lib/errorMessages";
-import type { Client, Contract } from "@/data/types";
+import { contractTotalPositions, type Client, type Contract } from "@/data/types";
 import { useSortableTable } from "@/hooks/use-sortable-table";
 
 export default function Clients() {
-  const { clients, contracts, pallets, refresh } = useStockData();
+  const { clients, contracts, amendments, pallets, refresh } = useStockData();
   const [searchClients, setSearchClients] = useState("");
   const [searchContracts, setSearchContracts] = useState("");
   const [clientFormOpen, setClientFormOpen] = useState(false);
@@ -38,6 +41,7 @@ export default function Clients() {
   const [editClient, setEditClient] = useState<Client | undefined>(undefined);
   const [showInactive, setShowInactive] = useState(false);
   const [docContract, setDocContract] = useState<Contract | null>(null);
+  const [amendContract, setAmendContract] = useState<Contract | null>(null);
 
   const clientSort = useSortableTable([], 'nomeFantasia');
   const contractSort = useSortableTable([], 'numero');
@@ -80,7 +84,7 @@ export default function Clients() {
         case 'cliente': aVal = clients.find(c => c.id === a.clienteId)?.nomeFantasia || ''; bVal = clients.find(c => c.id === b.clienteId)?.nomeFantasia || ''; break;
         case 'status': aVal = a.status; bVal = b.status; break;
         case 'dataTermino': aVal = a.dataTermino; bVal = b.dataTermino; break;
-        case 'posicoes': aVal = a.posicoesContratadas; bVal = b.posicoesContratadas; break;
+        case 'posicoes': aVal = contractTotalPositions(a); bVal = contractTotalPositions(b); break;
         case 'valor': aVal = a.posicoesContratadas * a.precoPorPosicao; bVal = b.posicoesContratadas * b.precoPorPosicao; break;
         case 'contrato_firmado': { const o = ['borrador', 'para_firma', 'aceptado', 'firmado']; aVal = o.indexOf(a.docEstado || 'borrador'); bVal = o.indexOf(b.docEstado || 'borrador'); break; }
         default: return 0;
@@ -214,8 +218,8 @@ export default function Clients() {
               <TableBody>
                 {sortedContracts.map(c => {
                   const client = clients.find(cl => cl.id === c.clienteId);
-                  const usage = c.posicoesContratadas > 0 ? Math.round((c.posicoesOcupadas / c.posicoesContratadas) * 100) : 0;
-                  const valorMes = c.posicoesContratadas * (c.precoPorPosicao + (c.recargoPorPosicao ?? 0));
+                  const usage = contractTotalPositions(c) > 0 ? Math.round((c.posicoesOcupadas / contractTotalPositions(c)) * 100) : 0;
+                  const valorMes = c.posicoesContratadas * (c.precoPorPosicao + (c.recargoPorPosicao ?? 0)) + (c.valorAdicional || 0);
                   return (
                     <TableRow key={c.id}>
                       <TableCell className="font-mono font-medium text-sm">{c.numero}</TableCell>
@@ -224,7 +228,10 @@ export default function Clients() {
                       <TableCell className="text-sm text-muted-foreground whitespace-nowrap">{formatDate(c.dataInicio)} → {formatDate(c.dataTermino)}</TableCell>
                       <TableCell>
                         <span className="font-medium">{c.posicoesOcupadas}</span>
-                        <span className="text-muted-foreground">/{c.posicoesContratadas}</span>
+                        <span className="text-muted-foreground">/{contractTotalPositions(c)}</span>{c.posicoesAdicionais ? <span className="ml-1 text-[11px] text-primary" title="Posiciones por adenda">(+{c.posicoesAdicionais} adenda)</span> : null}
+                        {amendments.filter((a) => a.contratoId === c.id && amendmentCounts(a) && a.fechaInicio > todayLocal()).map((a) => (
+                          <div key={a.id} className="text-[11px] text-primary">+{a.posiciones} desde {formatDate(a.fechaInicio)}</div>
+                        ))}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
@@ -240,6 +247,7 @@ export default function Clients() {
                         <div className="flex gap-1">
                           <Button size="sm" variant="ghost" className="h-7 px-2" title="Editar contrato" onClick={() => { setPendingEditContract(c); setEditAlertOpen(true); }}><Pencil className="h-4 w-4" /></Button>
                           <Button size="sm" variant="ghost" className="h-7 px-2" title="Documento, firma y anexos" onClick={() => setDocContract(c)}><FileSignature className="h-4 w-4" /></Button>
+                          {c.status === 'ativo' && <Button size="sm" variant="ghost" className="h-7 px-2" title="Adenda: agregar posiciones" onClick={() => setAmendContract(c)}><FilePlus2 className="h-4 w-4" /></Button>}
                           {c.status === 'ativo' && (
                             <Button size="sm" variant="ghost" className="h-7 px-2 text-destructive hover:text-destructive" title="Cerrar contrato" onClick={() => { setPendingCloseContract(c); setCloseAlertOpen(true); }}><XCircle className="h-4 w-4" /></Button>
                           )}
@@ -298,6 +306,7 @@ export default function Clients() {
         </AlertDialogContent>
       </AlertDialog>
 
+      <AmendmentDialog open={!!amendContract} onOpenChange={(o) => !o && setAmendContract(null)} contract={amendContract ? contracts.find((x) => x.id === amendContract.id) || amendContract : null} client={clients.find((x) => x.id === amendContract?.clienteId)} />
       <ContractDocDialog open={!!docContract} onOpenChange={(o) => !o && setDocContract(null)} contract={docContract} client={clients.find((x) => x.id === docContract?.clienteId)} />
 
       <AlertDialog open={!!toggleClient} onOpenChange={(o) => !o && setToggleClient(null)}>

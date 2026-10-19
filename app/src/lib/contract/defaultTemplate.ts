@@ -51,3 +51,21 @@ Las partes constituyen domicilio en los indicados arriba y aceptan las comunicac
 
 En prueba de conformidad, se firman dos ejemplares de un mismo tenor y a un solo efecto.
 `;
+
+/** Modelo de adenda (ampliación de posiciones). Borrador sujeto a revisión legal. */
+export const DEFAULT_AMENDMENT_TEMPLATE = `# ADENDA N.º {{adenda.numero}} AL CONTRATO N.º {{contrato.numero}}
+
+En la ciudad de {{contrato.ciudad}}, a los {{contrato.fecha}}, entre **{{empresa.razon_social}}**, RUC {{empresa.ruc}}, representada por {{empresa.representante}}, C.I. {{empresa.representante_ci}}, en adelante **STOCKFLEX**; y **{{cliente.razon_social}}**, RUC {{cliente.ruc}}, representada por {{cliente.representante}}, en adelante **EL CLIENTE**, acuerdan la presente adenda al contrato de prestación de servicios de almacenamiento N.º {{contrato.numero}} (el "Contrato"):
+
+## PRIMERA — AMPLIACIÓN DE POSICIONES
+A partir del **{{adenda.fecha_inicio}}**, EL CLIENTE contrata **{{adenda.posiciones}} posiciones pallet adicionales**. Desde esa fecha, el total de posiciones contratadas pasa de {{adenda.posiciones_anteriores}} a **{{adenda.total_posiciones}} posiciones**.
+
+## SEGUNDA — PRECIO DE LAS POSICIONES ADICIONALES
+Las posiciones adicionales se facturan a **{{adenda.precio}}** por posición por mes, lo que suma **{{adenda.mensualidad}}** por mes. Las posiciones del Contrato original mantienen su precio. En el mes de inicio, las posiciones adicionales se facturan en forma proporcional a los días.
+
+## TERCERA — PLAZO
+Las posiciones adicionales rigen hasta la fecha de término del Contrato (**{{contrato.termino}}**) y se renuevan junto con él.
+
+## CUARTA — VIGENCIA DEL CONTRATO
+Todas las demás cláusulas y condiciones del Contrato permanecen sin cambios y se aplican también a las posiciones adicionales.
+`;

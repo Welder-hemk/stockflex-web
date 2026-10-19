@@ -43,7 +43,14 @@ export interface Contract {
   firmadoAt?: string | null;
   clausulasEspeciales?: string;
   docEstado?: 'borrador' | 'para_firma' | 'aceptado' | 'firmado';
+  /** Posiciones adicionales por adendas vigentes hoy (no cambian la comisión ni el precio original) */
+  posicoesAdicionais?: number;
+  /** Valor mensual de esas posiciones adicionales (precio de cada adenda) */
+  valorAdicional?: number;
 }
+
+/** Posiciones contratadas hoy: contrato original + adendas vigentes */
+export const contractTotalPositions = (c: Pick<Contract, 'posicoesContratadas' | 'posicoesAdicionais'>) => c.posicoesContratadas + (c.posicoesAdicionais || 0);
 
 export interface Pallet {
   id: string;

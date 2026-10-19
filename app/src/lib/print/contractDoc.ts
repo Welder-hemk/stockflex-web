@@ -11,6 +11,8 @@ export interface ContractPrint {
   empresa: string;
   cliente: string;
   aceptado?: { nombre: string; documento: string; fecha: string } | null;
+  /** Encabezado: "Contrato" (por defecto) o "Adenda" */
+  tipo?: string;
 }
 
 export function printContract(c: ContractPrint) {
@@ -18,7 +20,7 @@ export function printContract(c: ContractPrint) {
     ${c.borrador ? '<div style="position:fixed;top:120mm;left:0;right:0;text-align:center;font:bold 80px Arial;color:rgba(0,0,0,.06);transform:rotate(-24deg)">BORRADOR</div>' : ""}
     <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #FC8711;padding-bottom:3mm;margin-bottom:5mm">
       <img src="${window.location.origin}${import.meta.env.BASE_URL}logo-stockflex.png" style="height:26px" onerror="this.style.display='none'"/>
-      <div style="font:10px Arial;color:#555;text-align:right">Contrato ${e(c.numero)} · versión ${c.version || "borrador"}</div>
+      <div style="font:10px Arial;color:#555;text-align:right">${e(c.tipo || "Contrato")} ${e(c.numero)}${c.tipo ? (c.borrador ? " · borrador" : "") : ` · versión ${c.version || "borrador"}`}</div>
     </div>
     ${contractHtml(c.texto)}
     <div style="display:flex;justify-content:space-between;gap:20mm;margin-top:22mm;font:10.5px Arial">

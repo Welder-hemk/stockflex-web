@@ -9,7 +9,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useTableQuery } from "@/hooks/use-table-query";
 import { mapMovement } from "@/data/supabaseData";
 import { dbInsertClientRequest, dbUpdateClientRequest } from "@/data/dbMutations";
-import { positionLabel, type ClientRequest, type Movement } from "@/data/types";
+import { contractTotalPositions, positionLabel, type ClientRequest, type Movement } from "@/data/types";
 import { fetchInvoices } from "@/data/billing";
 import { supabase } from "@/integrations/supabase/client";
 import { formatMoney, formatNumber } from "@/lib/formatters";
@@ -68,7 +68,7 @@ export default function ClientPortal() {
   const cContacts = authorizedContacts.filter((a) => a.clienteId === clienteId);
   const palletById = useMemo(() => new Map(pallets.map((p) => [p.id, p])), [pallets]);
 
-  const contratadas = active.reduce((s, c) => s + c.posicoesContratadas, 0);
+  const contratadas = active.reduce((s, c) => s + contractTotalPositions(c), 0);
   const ocupadas = cPallets.filter((p) => p.status === "armazenado" || p.status === "reservado_saida").reduce((s, p) => s + (p.palletDuplo ? 2 : 1), 0);
   const programadas = cReqs.filter((r) => r.tipo === "ingreso" && r.status === "pendente").reduce((s, r) => s + (r.quantidade || 0), 0);
   const month = todayLocal().slice(0, 7);

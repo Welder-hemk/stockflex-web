@@ -20,7 +20,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { Printer, QrCode, Lightbulb } from "lucide-react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useAuth } from "@/contexts/AuthContext";
-import { isGroundPosition } from "@/data/types";
+import { contractTotalPositions, isGroundPosition } from "@/data/types";
 
 const schema = z.object({
   clienteId: z.string().min(1, "Seleccione un cliente"),
@@ -115,7 +115,7 @@ export default function PalletForm({ open, onOpenChange }: Props) {
     if (contract) {
       const contractOccupied = pallets.filter(p => p.contratoId === data.contratoId && p.status === 'armazenado')
         .reduce((sum, p) => sum + (p.palletDuplo ? 2 : 1), 0);
-      if (contractOccupied + positionsNeeded > contract.posicoesContratadas) {
+      if (contractOccupied + positionsNeeded > contractTotalPositions(contract)) {
         setPendingPalletData(data); setCapacityWarning(true); return;
       }
     }

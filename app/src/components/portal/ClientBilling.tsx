@@ -16,7 +16,7 @@ import {
 import { printInvoices, printStatement } from "@/lib/print/invoiceDoc";
 import { formatMoney, formatNumber, toInputDecimal } from "@/lib/formatters";
 import { formatDate, todayLocal } from "@/lib/dates";
-import type { Client, Contract } from "@/data/types";
+import { contractTotalPositions, type Client, type Contract } from "@/data/types";
 
 const WHATSAPP = "595983110207";
 const MES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
@@ -267,10 +267,10 @@ export default function ClientBilling({ client, contracts }: { client: Client; c
             {activeContracts.map((c) => (
               <div key={c.id} className="rounded-lg bg-muted/40 p-4 text-sm space-y-1.5">
                 <div className="font-semibold">{c.numero} <span className="font-normal text-muted-foreground">· {formatDate(c.dataInicio)} a {formatDate(c.dataTermino)}</span></div>
-                <Row k="Posiciones contratadas" v={String(c.posicoesContratadas)} />
+                <Row k="Posiciones contratadas" v={c.posicoesAdicionais ? `${contractTotalPositions(c)} (${c.posicoesContratadas} + ${c.posicoesAdicionais} por adenda)` : String(c.posicoesContratadas)} />
                 <Row k="Precio por posición/mes" v={formatMoney(c.precoPorPosicao, c.moeda)} />
                 {(c.recargoPorPosicao ?? 0) > 0 && <Row k={c.recargoDescricao || "Recargo por posición/mes"} v={formatMoney(c.recargoPorPosicao, c.moeda)} />}
-                <Row k="Mensualidad" v={formatMoney(c.posicoesContratadas * (c.precoPorPosicao + (c.recargoPorPosicao ?? 0)), c.moeda)} strong />
+                <Row k="Mensualidad" v={formatMoney(c.posicoesContratadas * (c.precoPorPosicao + (c.recargoPorPosicao ?? 0)) + (c.valorAdicional || 0), c.moeda)} strong />
                 <Row k="Movimientos incluidos" v="1 por posición al mes (la entrada o la salida usan el del mes)" />
                 <Row k="Movimiento extra" v={formatMoney(c.precoMovExtra, c.moeda)} />
                 <Row k="Seguro" v={`${toInputDecimal(c.percentualSeguro)}% mensual del valor declarado`} />
