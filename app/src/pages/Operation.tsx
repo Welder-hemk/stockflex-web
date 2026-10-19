@@ -3,7 +3,8 @@ import { useSearchParams } from "react-router-dom";
 import { Warehouse as WarehouseIcon } from "lucide-react";
 import { useStockData } from "@/contexts/StockDataContext";
 import { PackagePlus, PackageMinus, MoveRight, ClipboardList, Printer } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { SectionTabsBar } from "@/components/layout/SectionHub";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import EntryPanel from "@/components/operation/EntryPanel";
@@ -35,9 +36,20 @@ export default function Operation() {
 
   return (
     <div className="space-y-4 max-w-6xl">
+      <SectionTabsBar
+        title="Operación"
+        current={tab}
+        onChange={setTab}
+        tabs={[
+          { key: "entrada", label: "Ingreso", icon: PackagePlus },
+          { key: "saida", label: "Salida", icon: PackageMinus },
+          { key: "transferencia", label: "Transferencia", icon: MoveRight },
+          { key: "pendentes", icon: ClipboardList, label: <>Pendientes{pendingCount > 0 && <span className="ml-1 rounded-full bg-destructive text-destructive-foreground text-xs px-1.5">{pendingCount}</span>}</> },
+        ]}
+      />
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Operación de depósito</h1>
+          <h1 className="text-2xl font-bold">{({ entrada: "Ingreso de pallets", saida: "Salida de pallets", transferencia: "Transferencia", pendentes: "Movimientos pendientes" } as Record<string, string>)[tab] || "Operación de depósito"}</h1>
           <p className="text-sm text-muted-foreground">Ingreso, salida y transferencia con lector de código. Las posiciones cortas (A-01-1-1) se buscan en el depósito elegido.</p>
         </div>
         <div className="flex flex-wrap items-center gap-4 text-sm">
@@ -68,15 +80,6 @@ export default function Operation() {
       </div>
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="grid grid-cols-4 h-auto w-full sm:w-auto sm:inline-grid">
-          <TabsTrigger value="entrada" className="py-2 gap-1 flex-col sm:flex-row"><PackagePlus className="h-4 w-4" /><span className="text-xs sm:text-sm">Ingreso</span></TabsTrigger>
-          <TabsTrigger value="saida" className="py-2 gap-1 flex-col sm:flex-row"><PackageMinus className="h-4 w-4" /><span className="text-xs sm:text-sm">Salida</span></TabsTrigger>
-          <TabsTrigger value="transferencia" className="py-2 gap-1 flex-col sm:flex-row"><MoveRight className="h-4 w-4" /><span className="text-xs sm:text-sm">Transferencia</span></TabsTrigger>
-          <TabsTrigger value="pendentes" className="py-2 gap-1 flex-col sm:flex-row">
-            <ClipboardList className="h-4 w-4" /><span className="text-xs sm:text-sm">Pendientes</span>
-            {pendingCount > 0 && <span className="ml-1 rounded-full bg-destructive text-destructive-foreground text-xs px-1.5">{pendingCount}</span>}
-          </TabsTrigger>
-        </TabsList>
         <TabsContent value="entrada"><EntryPanel autoPrint={autoPrint} initialPosition={posParam} /></TabsContent>
         <TabsContent value="saida"><ExitPanel autoPrint={autoPrint} initialCode={initialTab === "saida" ? palletParam : undefined} /></TabsContent>
         <TabsContent value="transferencia"><TransferPanel autoPrint={autoPrint} initialCode={initialTab === "transferencia" ? palletParam : undefined} /></TabsContent>

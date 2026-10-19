@@ -6,7 +6,8 @@ import {
   Loader2, MessageCircle, Plus, Printer, Receipt, RefreshCw, Search, Send, Wallet,
 } from "lucide-react";
 import * as XLSX from "xlsx";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { SectionTabsBar } from "@/components/layout/SectionHub";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -32,6 +33,7 @@ import { formatDate, monthLocal, todayLocal } from "@/lib/dates";
 import { toast } from "sonner";
 
 const TABS = ["resumen", "cierre", "facturas", "cobranzas", "pagos", "gastos", "comisiones"] as const;
+const TAB_LABEL: Record<string, string> = { resumen: "Resumen", cierre: "Cierre del mes", facturas: "Facturas", cobranzas: "Cobranzas", pagos: "Pagos recibidos", gastos: "Gastos", comisiones: "Agentes y comisiones" };
 const Expenses = lazy(() => import("@/pages/Expenses"));
 const Commissions = lazy(() => import("@/pages/Commissions"));
 type Tab = (typeof TABS)[number];
@@ -61,29 +63,26 @@ export default function Finance() {
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-end justify-between gap-3">
+      <SectionTabsBar
+        title="Finanzas"
+        current={tab}
+        onChange={setTab}
+        tabs={TABS.map((k) => ({ key: k, label: TAB_LABEL[k] }))}
+      />
+      {tab !== "gastos" && tab !== "comisiones" && <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Finanzas</h1>
-          <p className="text-sm text-muted-foreground">Cierre del mes, facturas, cobranzas, pagos, gastos y comisiones. Precios con IVA incluido.</p>
+          <h1 className="text-2xl font-bold">{TAB_LABEL[tab]}</h1>
+          <p className="text-sm text-muted-foreground">Cierre del mes, facturas, cobranzas y pagos. Precios con IVA incluido.</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={reload}><RefreshCw className="h-4 w-4 mr-1" />Actualizar</Button>
           <Button size="sm" onClick={() => setPayFor({})}><Plus className="h-4 w-4 mr-1" />Registrar pago</Button>
         </div>
-      </div>
+      </div>}
 
       {error && <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm text-destructive">No se pudieron cargar los datos: {(error as Error).message}</div>}
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="flex-wrap h-auto">
-          <TabsTrigger value="resumen">Resumen</TabsTrigger>
-          <TabsTrigger value="cierre">Cierre del mes</TabsTrigger>
-          <TabsTrigger value="facturas">Facturas</TabsTrigger>
-          <TabsTrigger value="cobranzas">Cobranzas</TabsTrigger>
-          <TabsTrigger value="pagos">Pagos recibidos</TabsTrigger>
-          <TabsTrigger value="gastos">Gastos</TabsTrigger>
-          <TabsTrigger value="comisiones">Agentes y comisiones</TabsTrigger>
-        </TabsList>
 
         <TabsContent value="resumen"><Summary invoices={invoices} payments={payments} byClient={byClient} loading={loading} onOpen={setDetailId} onGo={setTab} /></TabsContent>
         <TabsContent value="cierre">

@@ -1,11 +1,38 @@
 import { useEffect, useRef, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
-// Leitura pela câmera usando o leitor nativo do navegador (Chrome/Edge no Android e desktop).
+// Leitura pela câmera: usa o leitor nativo do navegador quando existe (Chrome/Android)
+// e, nos demais (iPhone/Safari, Firefox), lê o QR quadro a quadro com o jsQR.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Detector: any = typeof window !== "undefined" ? (window as any).BarcodeDetector : undefined;
 
-export const cameraScanSupported = () => !!Detector && !!navigator.mediaDevices?.getUserMedia;
+export const cameraScanSupported = () => typeof navigator !== "undefined" && !!navigator.mediaDevices?.getUserMedia;
+
+type Reader = (video: HTMLVideoElement) => Promise<string | null>;
+
+async function makeReader(): Promise<Reader> {
+  if (Detector) {
+    try {
+      const formats: string[] = (await Detector.getSupportedFormats?.()) || [];
+      if (!formats.length || formats.includes("qr_code")) {
+        const detector = new Detector({ formats: ["qr_code", "code_128", "ean_13", "code_39"].filter((f) => !formats.length || formats.includes(f)) });
+        return async (v) => (await detector.detect(v))?.[0]?.rawValue || null;
+      }
+    } catch { /* cai no jsQR */ }
+  }
+  const { default: jsQR } = await import("jsqr");
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
+  return async (v) => {
+    if (!v.videoWidth) return null;
+    const scale = Math.min(1, 640 / v.videoWidth); // imagem menor = leitura mais rápida no celular
+    canvas.width = Math.round(v.videoWidth * scale);
+    canvas.height = Math.round(v.videoHeight * scale);
+    ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
+    const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    return jsQR(img.data, img.width, img.height, { inversionAttempts: "dontInvert" })?.data || null;
+  };
+}
 
 interface Props {
   open: boolean;
@@ -30,7 +57,7 @@ export default function CameraScanner({ open, onClose, onDetected }: Props) {
 
     (async () => {
       try {
-        const detector = new Detector({ formats: ["code_128", "qr_code", "ean_13", "code_39"] });
+        const read = await makeReader();
         stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
         if (!videoRef.current) return;
         videoRef.current.srcObject = stream;
@@ -38,10 +65,11 @@ export default function CameraScanner({ open, onClose, onDetected }: Props) {
         const tick = async () => {
           if (stopped || !videoRef.current) return;
           try {
-            const found = await detector.detect(videoRef.current);
-            if (found?.[0]?.rawValue) {
+            const code = await read(videoRef.current);
+            if (code) {
               stopped = true;
-              onDetectedRef.current(found[0].rawValue);
+              if (navigator.vibrate) navigator.vibrate(80);
+              onDetectedRef.current(code);
               onCloseRef.current();
               return;
             }
@@ -69,7 +97,7 @@ export default function CameraScanner({ open, onClose, onDetected }: Props) {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Leer código con la cámara</DialogTitle>
-          <DialogDescription>Apunte a la etiqueta del pallet o de la posición.</DialogDescription>
+          <DialogDescription>Apunte al código QR de la etiqueta del pallet o de la posición.</DialogDescription>
         </DialogHeader>
         {error ? (
           <p className="text-sm text-destructive">{error}</p>

@@ -1,4 +1,4 @@
-import { barcodeSvg, qrSvg } from "./codes";
+import { qrSvg } from "./codes";
 import { escapeHtml as e, getLabelFormat, printPages, type LabelFormat } from "./printer";
 import { formatDate, formatDateTime } from "@/lib/dates";
 import { formatNumber } from "@/lib/formatters";
@@ -77,8 +77,8 @@ export const shortId = (id: string) => (id || "").replace(/-/g, "").slice(0, 8).
 async function labelHtml(d: LabelData, format: LabelFormat): Promise<string> {
   const p = d.pallet;
   const thermal = format === "thermal100x150";
-  const qr = await qrSvg(p.sku, thermal ? 100 : 120);
-  const bar = barcodeSvg(p.sku, { height: thermal ? 60 : 52, width: thermal ? 2.2 : 2.4, fontSize: 18 });
+  // QR grande: se lê com a câmera do celular de qualquer ângulo
+  const qr = await qrSvg(p.sku, thermal ? 160 : 210);
 
   const field = (label: string, value: string, big = false) => `
     <div style="min-width:0">
@@ -98,20 +98,20 @@ async function labelHtml(d: LabelData, format: LabelFormat): Promise<string> {
       <!-- Cliente: lo primero que se lee de lejos -->
       <div style="background:#111;color:#fff;border-radius:${thermal ? 4 : 6}px;padding:${thermal ? "1.5mm 3mm" : "2mm 4mm"};text-align:center;font-weight:800;text-transform:uppercase;letter-spacing:.5px;line-height:1.1;font-size:${thermal ? 26 : 38}px;${clamp2}">${e(d.clienteNome)}</div>
       <div style="display:flex;gap:${thermal ? "3mm" : "6mm"};align-items:center;${thermal ? "flex-direction:column;" : ""}">
-        <div style="flex:1;text-align:center;min-width:0">
-          <div style="font-size:${thermal ? 30 : 38}px;font-weight:bold;font-family:monospace;letter-spacing:2px;line-height:1">${e(p.sku)}</div>
-          <div style="margin-top:1.5mm;display:flex;justify-content:center">${bar}</div>
+        <div>${qr}</div>
+        <div style="flex:1;min-width:0;${thermal ? "text-align:center;" : ""}">
+          <div style="font-size:${thermal ? 9 : 10}px;font-weight:bold;color:#555;text-transform:uppercase;letter-spacing:.5px">Pallet</div>
+          <div style="font-size:${thermal ? 32 : 44}px;font-weight:bold;font-family:monospace;letter-spacing:2px;line-height:1">${e(p.sku)}</div>
+          <div style="margin-top:3mm;display:grid;grid-template-columns:1fr 1fr;gap:2mm 4mm">
+            ${field("Ubicación" + (p.palletDuplo ? " (doble)" : ""), e(loc(p)), true)}
+            ${field("Peso", e(kg(p.peso)), true)}
+          </div>
         </div>
-        ${thermal ? "" : `<div>${qr}</div>`}
       </div>
       <!-- Descripción: el cliente la usa para identificar su mercadería -->
       <div style="border:2px solid #111;border-radius:${thermal ? 4 : 6}px;padding:${thermal ? "1.5mm 2.5mm" : "2mm 4mm"}">
         <div style="font-size:${thermal ? 9 : 10}px;font-weight:bold;color:#555;text-transform:uppercase;letter-spacing:.5px">Descripción</div>
         <div style="font-size:${thermal ? 20 : 30}px;font-weight:bold;line-height:1.15;${clamp2}">${e(p.descricao || "—")}</div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:${thermal ? "2mm 3mm" : "2mm 6mm"}">
-        ${field("Ubicación" + (p.palletDuplo ? " (doble)" : ""), e(loc(p)), true)}
-        ${field("Peso", e(kg(p.peso)), true)}
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:${thermal ? "2mm" : "4mm"};margin-top:auto">
         ${field("Lote", e(p.lote || "—"))}
@@ -119,7 +119,6 @@ async function labelHtml(d: LabelData, format: LabelFormat): Promise<string> {
         ${field("Ingreso", e(formatDate(p.dataEntrada)))}
         ${field("Seguro", p.seguro ? "Sí" : "No")}
       </div>
-      ${thermal ? `<div style="display:flex;justify-content:center">${qr}</div>` : ""}
     </div>
   </div>`;
 }

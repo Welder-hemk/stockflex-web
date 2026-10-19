@@ -14,7 +14,8 @@ import { fetchInvoices } from "@/data/billing";
 import { supabase } from "@/integrations/supabase/client";
 import { formatMoney, formatNumber } from "@/lib/formatters";
 import { formatDate, formatDateTime, todayLocal } from "@/lib/dates";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { SectionTabsBar } from "@/components/layout/SectionHub";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -152,10 +153,26 @@ export default function ClientPortal() {
     return <div className="rounded-lg border p-8 text-center text-muted-foreground">{isAdmin ? "No hay clientes." : "Su usuario todavía no está vinculado a una empresa. Escríbanos a contacto@stockflex.com.py."}</div>;
   }
 
+  const openReqs = cReqs.filter((r) => r.status === "pendente" || r.status === "separado").length;
+  const toSign = cContracts.filter((c) => c.docEstado === "para_firma").length;
   const nearEnd = active.filter((c) => { const d = (new Date(`${c.dataTermino}T12:00:00`).getTime() - Date.now()) / 86400000; return d >= 0 && d <= 30; });
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5">
+      <SectionTabsBar
+        title="Portal del cliente"
+        current={tab}
+        onChange={setTab}
+        tabs={[
+          { key: "resumen", label: "Resumen" },
+          { key: "mercaderia", label: "Mi mercadería" },
+          { key: "movimientos", label: "Movimientos" },
+          { key: "cuenta", label: "Mi cuenta" },
+          { key: "solicitudes", label: `Solicitudes${openReqs ? ` (${openReqs})` : ""}` },
+          { key: "contrato", label: `Contrato${toSign ? ` (${toSign})` : ""}` },
+          { key: "autorizados", label: "Autorizados" },
+        ]}
+      />
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold">{client.nomeFantasia || client.razaoSocial}</h1>
@@ -189,15 +206,6 @@ export default function ClientPortal() {
       ))}
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="flex-wrap h-auto">
-          <TabsTrigger value="resumen">Resumen</TabsTrigger>
-          <TabsTrigger value="mercaderia">Mi mercadería</TabsTrigger>
-          <TabsTrigger value="movimientos">Movimientos</TabsTrigger>
-          <TabsTrigger value="cuenta">Mi cuenta</TabsTrigger>
-          <TabsTrigger value="solicitudes">Solicitudes{cReqs.filter((r) => r.status === "pendente" || r.status === "separado").length ? ` (${cReqs.filter((r) => r.status === "pendente" || r.status === "separado").length})` : ""}</TabsTrigger>
-          <TabsTrigger value="contrato">Contrato{cContracts.filter((c) => c.docEstado === "para_firma").length ? ` (${cContracts.filter((c) => c.docEstado === "para_firma").length})` : ""}</TabsTrigger>
-          <TabsTrigger value="autorizados">Autorizados</TabsTrigger>
-        </TabsList>
 
         {/* RESUMEN */}
         <TabsContent value="resumen" className="space-y-5 mt-4">

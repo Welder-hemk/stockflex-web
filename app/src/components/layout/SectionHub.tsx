@@ -29,29 +29,42 @@ export default function SectionHub({ title, tabs }: { title: string; tabs: HubTa
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3 border-b pb-2">
-        <span className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mr-1">{title}</span>
-        <div role="tablist" className="flex flex-wrap gap-1">
-          {visible.map((t) => (
-            <button
-              key={t.key}
-              role="tab"
-              aria-selected={t.key === current.key}
-              onClick={() => go(t.key)}
-              className={cn(
-                "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
-                t.key === current.key ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground",
-              )}
-            >
-              {t.icon && <t.icon className="h-4 w-4" />}
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </div>
+      <SectionTabsBar title={title} tabs={visible} current={current.key} onChange={go} />
       <Suspense fallback={<div className="py-10 text-center"><Loader2 className="h-5 w-5 animate-spin inline" /></div>}>
         <Comp key={current.key} />
       </Suspense>
+    </div>
+  );
+}
+
+/** Barra de sección con pestañas (mismo estilo en Depósito, Comercial, Finanzas, Operación, Portal…) */
+export function SectionTabsBar({ title, tabs, current, onChange }: {
+  title: string;
+  tabs: { key: string; label: React.ReactNode; icon?: React.ElementType }[];
+  current: string;
+  onChange: (key: string) => void;
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b pb-2">
+      <span className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mr-1">{title}</span>
+      <div role="tablist" className="flex flex-wrap gap-1">
+        {tabs.map((t) => (
+          <button
+            key={t.key}
+            type="button"
+            role="tab"
+            aria-selected={t.key === current}
+            onClick={() => onChange(t.key)}
+            className={cn(
+              "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+              t.key === current ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground",
+            )}
+          >
+            {t.icon && <t.icon className="h-4 w-4" />}
+            {t.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
