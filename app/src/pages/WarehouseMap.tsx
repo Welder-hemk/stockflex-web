@@ -92,7 +92,12 @@ export default function WarehouseMap() {
   useEffect(() => { if (!ruas.includes(calle)) { setCalle(ruas[0] || ""); setPage(0); } }, [ruas, calle]);
 
   // ---- planta
-  const pasillos = useMemo(() => new Set((currentWarehouse?.pasillos || "").split(",").map((x) => x.trim()).filter(Boolean)), [currentWarehouse]);
+  // Pasillos: los configurados en Configuraciones › Depósitos; si no hay, uno entre cada calle
+  const pasillos = useMemo(() => {
+    const cfg = (currentWarehouse?.pasillos || "").split(",").map((x) => x.trim().toUpperCase()).filter(Boolean);
+    return new Set(cfg.length ? cfg : ruas.slice(0, -1));
+  }, [currentWarehouse, ruas]);
+  const aisleNo = useMemo(() => { const m = new Map<string, number>(); let n = 0; for (const r of ruas) if (pasillos.has(r)) m.set(r, ++n); return m; }, [ruas, pasillos]);
   const plan = useMemo(() => ruas.map((rua) => {
     const rp = positions.filter((p) => p.rua === rua);
     const blocos = [...new Set(rp.map((p) => p.bloco))].sort((a, b) => a - b);
@@ -304,7 +309,7 @@ export default function WarehouseMap() {
       <div className="space-y-4">
         <h1 className="text-2xl font-bold">Mapa del depósito</h1>
         <div className="rounded-lg border border-dashed p-10 text-center text-muted-foreground">
-          Este depósito no tiene posiciones cargadas. {user?.role === "admin" ? <Button variant="link" onClick={() => navigate("/depositos")}>Configurar la planta en Depósitos</Button> : "Pida a un administrador que configure la planta."}
+          Este depósito no tiene posiciones cargadas. {user?.role === "admin" ? <Button variant="link" onClick={() => navigate("/configuraciones?vista=depositos")}>Configurar la planta en Configuraciones</Button> : "Pida a un administrador que configure la planta."}
         </div>
       </div>
     );
@@ -371,7 +376,11 @@ export default function WarehouseMap() {
                     ))}
                     {Array.from({ length: maxBays - r.bays.length }).map((_, i) => <div key={`e${i}`} style={{ width: r.cols * (isMobile ? 8 : 10) + 4 }} />)}
                   </div>
-                  {pasillos.has(r.rua) && <div className="pl-aisle" />}
+                  {pasillos.has(r.rua) && (
+                    <div className="pl-aisle" aria-label={`Pasillo ${aisleNo.get(r.rua)}`}>
+                      <span>Pasillo {aisleNo.get(r.rua)}</span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

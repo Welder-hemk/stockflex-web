@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { LayoutDashboard, Users, FileText, Package, MapPin, ArrowLeftRight, Calculator, UserCircle, ChevronLeft, ShieldCheck, KeyRound, LogOut, DollarSign, Receipt, Stethoscope, ScanLine, Target, Building2, HandCoins, FileSignature } from "lucide-react";
+import { LayoutDashboard, Users, UserCircle, ChevronLeft, ShieldCheck, KeyRound, LogOut, DollarSign, Stethoscope, ScanLine, Warehouse, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
@@ -14,18 +14,12 @@ interface NavItem {
 const navItems: NavItem[] = [
   { to: "/", icon: LayoutDashboard, label: "Dashboard", roles: ["admin", "operador", "financeiro"] },
   { to: "/operacao", icon: ScanLine, label: "Operación", roles: ["admin", "operador"] },
-  { to: "/prospectos", icon: Target, label: "Prospectos", roles: ["admin", "financeiro"] },
-  { to: "/clientes", icon: Users, label: "Clientes", roles: ["admin", "financeiro"] },
+  { to: "/deposito", icon: Warehouse, label: "Depósito", roles: ["admin", "operador"] },
+  { to: "/comercial", icon: Users, label: "Comercial", roles: ["admin", "financeiro"] },
   { to: "/autorizados", icon: ShieldCheck, label: "Autorizados", roles: ["admin"] },
-  { to: "/pallets", icon: Package, label: "Pallets", roles: ["admin", "operador"] },
-  { to: "/mapa", icon: MapPin, label: "Mapa del Depósito", roles: ["admin", "operador"] },
-  { to: "/movimentacoes", icon: ArrowLeftRight, label: "Movimientos", roles: ["admin", "operador"] },
   { to: "/finanzas", icon: DollarSign, label: "Finanzas", roles: ["admin", "financeiro"] },
-  { to: "/comisiones", icon: HandCoins, label: "Agentes y comisiones", roles: ["admin", "financeiro"] },
-  { to: "/gastos", icon: Receipt, label: "Gastos", roles: ["admin", "financeiro"] },
   { to: "/portal-cliente", icon: UserCircle, label: "Portal del cliente", roles: ["admin", "cliente"] },
-  { to: "/depositos", icon: Building2, label: "Depósitos", roles: ["admin"] },
-  { to: "/modelo-contrato", icon: FileSignature, label: "Modelo de contrato", roles: ["admin"] },
+  { to: "/configuraciones", icon: Settings, label: "Configuraciones", roles: ["admin"] },
   { to: "/usuarios", icon: KeyRound, label: "Usuarios", roles: ["admin"] },
   { to: "/diagnostico", icon: Stethoscope, label: "Diagnóstico", roles: ["admin"] },
   { to: "/mi-cuenta", icon: UserCircle, label: "Mi Cuenta", roles: ["admin", "operador", "financeiro", "cliente"] },

@@ -198,4 +198,5 @@
 .pl-bay { display: grid; gap: 1px; padding: 2px; box-sizing: border-box; background: #A9B6C6; border-radius: 2px; border: 0; cursor: pointer; }
 .pl-bay.on { outline: 3px solid hsl(var(--primary)); outline-offset: 1px; }
 .pl-cell { border-radius: 1px; min-height: 4px; }
-.pl-aisle { height: 12px; margin: 2px 0 2px 64px; background-image: linear-gradient(to right, #E9C46A 50%, transparent 50%); background-size: 14px 2px; background-repeat: repeat-x; background-position: 0 50%; }
+.pl-aisle { position: relative; height: 18px; margin: 3px 0 3px 64px; border-radius: 3px; background-color: hsl(var(--muted)); background-image: linear-gradient(to right, #E9C46A 55%, transparent 55%); background-size: 16px 2px; background-repeat: repeat-x; background-position: 0 50%; }
+.pl-aisle span { position: absolute; left: -60px; top: 50%; transform: translateY(-50%); font-size: 10px; font-weight: 600; color: #B8892A; text-transform: uppercase; letter-spacing: .4px; white-space: nowrap; }

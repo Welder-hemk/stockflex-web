@@ -1,7 +1,7 @@
 import { formatNumber } from "@/lib/formatters";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-import { Search, Plus, FileText, Paperclip, Printer, AlertTriangle, CheckCircle, Loader2, FileDown, XCircle } from "lucide-react";
+import { Search, Plus, PackagePlus, FileText, Paperclip, Printer, AlertTriangle, CheckCircle, Loader2, FileDown, XCircle } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import * as XLSX from "xlsx";
@@ -14,6 +14,7 @@ import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import StatusBadge from "@/components/shared/StatusBadge";
 import MovementReceipt from "@/components/MovementReceipt";
+import BatchEntryDialog from "@/components/operation/BatchEntryDialog";
 import { cancelMovement, confirmMovement, isPositionCode, printMovements, resolvePositionId } from "@/data/operations";
 import { statusLabels } from "@/components/shared/StatusBadge";
 import { parseDecimal } from "@/lib/formatters";
@@ -55,6 +56,7 @@ export default function Movements() {
   const [dateTo, setDateTo] = useState<Date | undefined>();
   const [receiptMovement, setReceiptMovement] = useState<Movement | null>(null);
   const [attachDialogOpen, setAttachDialogOpen] = useState(false);
+  const [batchFor, setBatchFor] = useState<string | null>(null);
   const [attachTarget, setAttachTarget] = useState<Movement | null>(null);
   const [extraCostDialogOpen, setExtraCostDialogOpen] = useState(false);
   const [extraCostTarget, setExtraCostTarget] = useState<Movement | null>(null);
@@ -375,6 +377,7 @@ export default function Movements() {
           <Button variant="outline" size="sm" onClick={exportPDF} className="gap-1"><FileDown className="h-4 w-4" /> PDF</Button>
           <Button variant="outline" size="sm" onClick={exportExcel} className="gap-1"><FileDown className="h-4 w-4" /> Excel</Button>
           <Button variant="outline" onClick={handlePrint} className="gap-1"><Printer className="h-4 w-4" /> Generar Reporte</Button>
+          <Button variant="outline" onClick={() => setBatchFor('')}><PackagePlus className="h-4 w-4 mr-2" /> Ingreso en lote</Button>
           <Button onClick={() => setNewMovDialogOpen(true)}><Plus className="h-4 w-4 mr-2" /> Nuevo Movimiento</Button>
         </div>
       </div>
@@ -475,6 +478,8 @@ export default function Movements() {
           <DialogHeader><DialogTitle>Nuevo Movimiento</DialogTitle></DialogHeader>
           <div className="grid grid-cols-2 gap-4 pt-2">
             <div className="space-y-1"><Label>Tipo *</Label><Select value={newMov.tipo} onValueChange={v => {
+              // Ingreso crea pallets nuevos: abre la planilla de ingreso (uno o varios pallets)
+              if (v === 'entrada') { const cli = newMov.clienteId; setNewMovDialogOpen(false); resetNewMov(); setBatchFor(cli || ''); return; }
               const sp = pallets.find(p => p.id === newMov.palletId);
               let origem = newMov.origemLocal, destino = newMov.destinoLocal;
               if (v === 'entrada') { origem = 'Doca Ingreso'; destino = ''; }
@@ -482,7 +487,7 @@ export default function Movements() {
               else if ((v === 'transferencia' || v === 'ajuste') && sp) { origem = sp.localizacao; destino = ''; }
               else if (v === 'avaria' && sp) { origem = sp.localizacao; destino = sp.localizacao; }
               setNewMov(p => ({ ...p, tipo: v, origemLocal: origem, destinoLocal: destino, hasCustoExtra: v === 'avaria' || p.hasCustoExtra }));
-            }}><SelectTrigger><SelectValue placeholder="Seleccione" /></SelectTrigger><SelectContent>{Object.entries(tipoLabels).filter(([k]) => k !== 'entrada').map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}</SelectContent></Select></div>
+            }}><SelectTrigger><SelectValue placeholder="Seleccione" /></SelectTrigger><SelectContent><SelectItem value="entrada">Ingreso de pallets (uno o varios)</SelectItem>{Object.entries(tipoLabels).filter(([k]) => k !== 'entrada').map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}</SelectContent></Select></div>
             <div className="space-y-1"><Label>Cliente *</Label><Select value={newMov.clienteId} onValueChange={v => setNewMov(p => ({ ...p, clienteId: v, contratoId: '', palletId: '', origemLocal: '', destinoLocal: '' }))}><SelectTrigger><SelectValue placeholder="Seleccione" /></SelectTrigger><SelectContent>{clients.map(c => <SelectItem key={c.id} value={c.id}>{c.nomeFantasia}</SelectItem>)}</SelectContent></Select></div>
             <div className="space-y-1"><Label>Contrato</Label><Select value={newMov.contratoId} onValueChange={v => setNewMov(p => ({ ...p, contratoId: v }))} disabled={!newMov.clienteId}><SelectTrigger><SelectValue placeholder="Seleccione" /></SelectTrigger><SelectContent>{newMovContracts.map(c => <SelectItem key={c.id} value={c.id}>{c.numero}</SelectItem>)}</SelectContent></Select></div>
             <div className="space-y-1"><Label>Pallet *</Label><Select value={newMov.palletId} onValueChange={v => {
@@ -512,6 +517,8 @@ export default function Movements() {
           <DialogFooter><Button variant="outline" onClick={() => { setNewMovDialogOpen(false); resetNewMov(); }}>Cancelar</Button><Button onClick={handleCreateMovement}>Crear Movimiento</Button></DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <BatchEntryDialog open={batchFor !== null} onOpenChange={(o) => { if (!o) { setBatchFor(null); refreshMov(); } }} initialClienteId={batchFor || undefined} />
 
       <AlertDialog open={!!confirmTarget} onOpenChange={(o) => !o && setConfirmTarget(null)}>
         <AlertDialogContent><AlertDialogHeader><AlertDialogTitle>Efectivar Movimiento</AlertDialogTitle><AlertDialogDescription>¿Confirma que desea efectivar el movimiento <span className="font-mono font-semibold">{confirmTarget?.id}</span>?</AlertDialogDescription></AlertDialogHeader>

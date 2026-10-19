@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { lazy, Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -31,7 +31,9 @@ import { formatMoney, parseDecimal } from "@/lib/formatters";
 import { formatDate, monthLocal, todayLocal } from "@/lib/dates";
 import { toast } from "sonner";
 
-const TABS = ["resumen", "cierre", "facturas", "cobranzas", "pagos"] as const;
+const TABS = ["resumen", "cierre", "facturas", "cobranzas", "pagos", "gastos", "comisiones"] as const;
+const Expenses = lazy(() => import("@/pages/Expenses"));
+const Commissions = lazy(() => import("@/pages/Commissions"));
 type Tab = (typeof TABS)[number];
 
 const clientName = (c?: Client) => c?.nomeFantasia || c?.razaoSocial || "—";
@@ -62,7 +64,7 @@ export default function Finance() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold">Finanzas</h1>
-          <p className="text-sm text-muted-foreground">Cierre del mes, facturas, cobranzas y pagos. Precios con IVA incluido.</p>
+          <p className="text-sm text-muted-foreground">Cierre del mes, facturas, cobranzas, pagos, gastos y comisiones. Precios con IVA incluido.</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={reload}><RefreshCw className="h-4 w-4 mr-1" />Actualizar</Button>
@@ -79,6 +81,8 @@ export default function Finance() {
           <TabsTrigger value="facturas">Facturas</TabsTrigger>
           <TabsTrigger value="cobranzas">Cobranzas</TabsTrigger>
           <TabsTrigger value="pagos">Pagos recibidos</TabsTrigger>
+          <TabsTrigger value="gastos">Gastos</TabsTrigger>
+          <TabsTrigger value="comisiones">Agentes y comisiones</TabsTrigger>
         </TabsList>
 
         <TabsContent value="resumen"><Summary invoices={invoices} payments={payments} byClient={byClient} loading={loading} onOpen={setDetailId} onGo={setTab} /></TabsContent>
@@ -88,6 +92,8 @@ export default function Finance() {
         <TabsContent value="facturas"><InvoiceList invoices={invoices} byClient={byClient} byContract={byContract} payments={payments} onOpen={setDetailId} /></TabsContent>
         <TabsContent value="cobranzas"><Collections invoices={invoices} payments={payments} clients={clients} byContract={byContract} onPay={(clientId) => setPayFor({ clientId })} onChanged={reload} /></TabsContent>
         <TabsContent value="pagos"><PaymentsList payments={payments} invoices={invoices} byClient={byClient} onChanged={reload} /></TabsContent>
+        <TabsContent value="gastos" className="mt-4"><Suspense fallback={null}>{tab === "gastos" && <Expenses />}</Suspense></TabsContent>
+        <TabsContent value="comisiones" className="mt-4"><Suspense fallback={null}>{tab === "comisiones" && <Commissions />}</Suspense></TabsContent>
       </Tabs>
 
       <InvoiceSheet

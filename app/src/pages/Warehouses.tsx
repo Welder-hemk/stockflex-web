@@ -202,7 +202,7 @@ export default function Warehouses() {
                 <div className="grid gap-1.5"><Label>Ciudad</Label><Input value={edit.city} onChange={(e) => setEdit({ ...edit, city: e.target.value })} /></div>
                 <div className="grid gap-1.5"><Label>Dirección</Label><Input value={edit.address} onChange={(e) => setEdit({ ...edit, address: e.target.value })} /></div>
               </div>
-              <div className="grid gap-1.5"><Label htmlFor="wh-pas">Pasillos (para dibujar la planta)</Label><Input id="wh-pas" value={edit.pasillos || ""} onChange={(e) => setEdit({ ...edit, pasillos: e.target.value.toUpperCase() })} placeholder="A,C,E" className="font-mono" /><p className="text-xs text-muted-foreground">Calles después de las cuales hay un pasillo. Ej.: "A,C,E" = A | pasillo | B C | pasillo | D E | pasillo…</p></div>
+              <div className="grid gap-1.5"><Label htmlFor="wh-pas">Pasillos (para dibujar la planta)</Label><Input id="wh-pas" value={edit.pasillos || ""} onChange={(e) => setEdit({ ...edit, pasillos: e.target.value.toUpperCase() })} placeholder="A,C,E" className="font-mono" /><p className="text-xs text-muted-foreground">Calles después de las cuales hay un pasillo. Ej.: "A,C,E" = A | pasillo | B C | pasillo | D E | pasillo… Vacío = un pasillo entre cada calle.</p></div>
               <div className="grid gap-1.5"><Label>Notas</Label><Textarea value={edit.notes} onChange={(e) => setEdit({ ...edit, notes: e.target.value })} className="min-h-[60px]" /></div>
               <label className="flex items-center gap-2 text-sm"><Switch checked={edit.active} onCheckedChange={(v) => setEdit({ ...edit, active: v })} />Activo (aparece en la operación)</label>
             </div>

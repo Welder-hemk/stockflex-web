@@ -130,7 +130,7 @@ export function labelFor(p: Pallet, lookup: PrintLookup): LabelData {
  * depois da operação — assim a localização e o peso saem sempre atualizados.
  * Movimentos do mesmo tipo e cliente saem num comprovante único.
  */
-export async function printMovements(movementIds: string[], lookup: PrintLookup, opts: { labels?: boolean } = {}) {
+export async function printMovements(movementIds: string[], lookup: PrintLookup, opts: { labels?: boolean; receipt?: boolean } = {}) {
   const movements = await fetchMovements(movementIds);
   if (movements.length === 0) return;
   movements.sort((a, b) => movementIds.indexOf(a.id) - movementIds.indexOf(b.id));
@@ -165,7 +165,7 @@ export async function printMovements(movementIds: string[], lookup: PrintLookup,
     }),
   };
 
-  await printReceipt(receipt);
+  if (opts.receipt !== false) await printReceipt(receipt);
 
   if (opts.labels) {
     const labelPallets = movements.map((m) => byId.get(m.palletId)).filter((p): p is Pallet => !!p && p.status !== "expedido");

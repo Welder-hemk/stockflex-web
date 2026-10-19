@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
-import { Loader2, PackagePlus, Printer, MapPin, AlertTriangle, RotateCcw } from "lucide-react";
+import { Loader2, PackagePlus, Printer, MapPin, AlertTriangle, RotateCcw, Layers } from "lucide-react";
+import BatchEntryDialog from "./BatchEntryDialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -51,6 +52,7 @@ export default function EntryPanel({ autoPrint, initialPosition }: { autoPrint: 
   const [saving, setSaving] = useState(false);
   const [session, setSession] = useState<SessionEntry[]>([]);
   const pesoRef = useRef<HTMLInputElement>(null);
+  const [batchOpen, setBatchOpen] = useState(false);
 
   const activeContracts = useMemo(
     () => contracts.filter((c) => c.clienteId === clienteId && c.status === "ativo"),
@@ -159,9 +161,14 @@ export default function EntryPanel({ autoPrint, initialPosition }: { autoPrint: 
     <div className="grid gap-4 lg:grid-cols-[1fr_360px]">
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center gap-2">
-            <PackagePlus className="h-5 w-5 text-primary" /> Ingreso de pallet
-          </CardTitle>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <CardTitle className="text-lg flex items-center gap-2">
+              <PackagePlus className="h-5 w-5 text-primary" /> Ingreso de pallet
+            </CardTitle>
+            <Button type="button" variant="outline" size="sm" onClick={() => setBatchOpen(true)}>
+              <Layers className="h-4 w-4 mr-1" /> Ingreso en lote
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <form
@@ -267,6 +274,7 @@ export default function EntryPanel({ autoPrint, initialPosition }: { autoPrint: 
         </CardContent>
       </Card>
 
+      <BatchEntryDialog open={batchOpen} onOpenChange={setBatchOpen} initialClienteId={clienteId || undefined} />
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-base">Ingresados en esta sesión ({session.length})</CardTitle>
