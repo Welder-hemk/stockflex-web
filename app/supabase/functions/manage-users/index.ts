@@ -181,12 +181,18 @@ Deno.serve(async (req) => {
 
     if (action === "list") {
       // List all profiles + roles
-      const { data: profiles } = await adminClient
+      const { data: profiles, error: pErr } = await adminClient
         .from("profiles")
         .select("id, email, nome, ativo, cliente_id, created_at");
-      const { data: roles } = await adminClient
+      const { data: roles, error: rErr } = await adminClient
         .from("user_roles")
         .select("user_id, role");
+      if (pErr || rErr) {
+        return new Response(JSON.stringify({ error: `Erro ao ler usuários: ${(pErr || rErr)!.message}` }), {
+          status: 500,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
 
       const users = (profiles || []).map((p) => {
         const userRole = roles?.find((r) => r.user_id === p.id);
