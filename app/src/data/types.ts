@@ -222,7 +222,7 @@ export interface ClientRequest {
 export type ExpenseStatus = 'pendente' | 'pago' | 'vencido';
 export type ExpenseCategory =
   | 'alquiler' | 'salarios' | 'servicios' | 'mantenimiento'
-  | 'combustible' | 'seguros' | 'impuestos' | 'insumos' | 'otros' | 'cac';
+  | 'combustible' | 'seguros' | 'impuestos' | 'insumos' | 'otros' | 'cac' | 'inversion';
 
 export const EXPENSE_CATEGORIES: Record<ExpenseCategory, string> = {
   alquiler: 'Alquiler',
@@ -235,6 +235,7 @@ export const EXPENSE_CATEGORIES: Record<ExpenseCategory, string> = {
   insumos: 'Insumos y Materiales',
   otros: 'Otros',
   cac: 'Comisión de captación (CAC)',
+  inversion: 'Inversión (activo fijo)',
 };
 
 export interface Expense {

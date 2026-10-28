@@ -69,6 +69,7 @@ const App = () => (
                 <Route path="/modelo-contrato" element={<To path="/configuraciones" tab="contrato" />} />
                 <Route path="/gastos" element={<To path="/finanzas" tab="gastos" param="tab" />} />
                 <Route path="/comisiones" element={<To path="/finanzas" tab="comisiones" param="tab" />} />
+                <Route path="/proyeccion" element={<To path="/finanzas" tab="proyeccion" param="tab" />} />
                 <Route path="/autorizados" element={<ProtectedRoute allowedRoles={["admin"]}><AuthorizedContacts /></ProtectedRoute>} />
                 <Route path="/finanzas" element={<ProtectedRoute allowedRoles={["admin", "financeiro"]}><Finance /></ProtectedRoute>} />
                 <Route path="/fechamento" element={<Navigate to="/finanzas?tab=cierre" replace />} />

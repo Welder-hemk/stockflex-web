@@ -134,4 +134,20 @@ insert into app_settings(key,value) values
  ('empresa_representante','Representante Demo'),('empresa_representante_ci','1.000.000'),('empresa_email','contacto@stockflex.com.py'),
  ('contrato_ciudad','Ciudad del Este'),('contrato_jurisdiccion','los Juzgados y Tribunales de Ciudad del Este, Alto Paraná'),('contrato_mora_pct','1')
 on conflict (key) do update set value=excluded.value;
+-- Gastos de demostración (jul–oct 2026) e inversiones iniciales
+insert into expenses(competencia,categoria,descricao,valor,moeda,valor_usd,cambio_dia,data_vencimento,status)
+select per, cat::expense_category, descr, val, moeda, usd, cambio, (per || '-10')::date, 'pago'
+from (values ('alquiler','Alquiler del barracón',2000::numeric,'USD',2000::numeric,null::numeric),
+             ('salarios','Operador de depósito',400,'USD',400,null),
+             ('servicios','Monitoreo de cámaras',150000,'PYG',20.55,7300),
+             ('servicios','Energía e internet',120,'USD',120,null),
+             ('combustible','Gas de la apiladora',35,'USD',35,null)) g(cat,descr,val,moeda,usd,cambio)
+cross join (values ('2026-07'),('2026-08'),('2026-09'),('2026-10')) m(per);
+insert into expenses(competencia,categoria,descricao,valor,moeda,valor_usd,cambio_dia,data_vencimento,status) values
+ ('2026-07','inversion','Apiladora eléctrica',14000,'USD',14000,null,'2026-07-05','pago'),
+ ('2026-07','inversion','Sistema de seguridad (cámaras y alarma)',5000000,'PYG',684.93,7300,'2026-07-05','pago');
+-- Escenario base del simulador
+insert into projection_scenarios(nombre,inicio,es_base,notas,params) values
+ ('Plan 2026 – 1 barracón','2026-07',true,'Escenario de partida (demo)',
+  '{"nBarr":1,"interv":12,"posEst":780,"posPiso":76,"preco":7,"extra":0,"iva":10,"occIni":20,"occAlvo":85,"rampa":12,"custoPos":25,"estCaixa":false,"apil":14000,"segInv":5000000,"outroInv":0,"giro":2,"aluguel":2000,"salario":400,"pessoas":1,"monit":150000,"outros":150,"varPos":0,"cambio":7300,"ire":10,"depEst":15,"depApil":5,"depEq":5,"tma":12,"horiz":60}');
 select 'seed ok', (select count(*) from pallets), (select count(*) from billing_invoices), (select count(*) from billing_payments);

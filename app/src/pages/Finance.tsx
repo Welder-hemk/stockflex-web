@@ -32,10 +32,11 @@ import { formatMoney, parseDecimal } from "@/lib/formatters";
 import { formatDate, monthLocal, todayLocal } from "@/lib/dates";
 import { toast } from "sonner";
 
-const TABS = ["resumen", "cierre", "facturas", "cobranzas", "pagos", "gastos", "comisiones"] as const;
-const TAB_LABEL: Record<string, string> = { resumen: "Resumen", cierre: "Cierre del mes", facturas: "Facturas", cobranzas: "Cobranzas", pagos: "Pagos recibidos", gastos: "Gastos", comisiones: "Agentes y comisiones" };
+const TABS = ["resumen", "cierre", "facturas", "cobranzas", "pagos", "gastos", "comisiones", "proyeccion"] as const;
+const TAB_LABEL: Record<string, string> = { resumen: "Resumen", cierre: "Cierre del mes", facturas: "Facturas", cobranzas: "Cobranzas", pagos: "Pagos recibidos", gastos: "Gastos", comisiones: "Agentes y comisiones", proyeccion: "Proyección" };
 const Expenses = lazy(() => import("@/pages/Expenses"));
 const Commissions = lazy(() => import("@/pages/Commissions"));
+const Projection = lazy(() => import("@/pages/Projection"));
 type Tab = (typeof TABS)[number];
 
 const clientName = (c?: Client) => c?.nomeFantasia || c?.razaoSocial || "—";
@@ -69,7 +70,7 @@ export default function Finance() {
         onChange={setTab}
         tabs={TABS.map((k) => ({ key: k, label: TAB_LABEL[k] }))}
       />
-      {tab !== "gastos" && tab !== "comisiones" && <div className="flex flex-wrap items-end justify-between gap-3">
+      {tab !== "gastos" && tab !== "comisiones" && tab !== "proyeccion" && <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold">{TAB_LABEL[tab]}</h1>
           <p className="text-sm text-muted-foreground">Cierre del mes, facturas, cobranzas y pagos. Precios con IVA incluido.</p>
@@ -93,6 +94,7 @@ export default function Finance() {
         <TabsContent value="pagos"><PaymentsList payments={payments} invoices={invoices} byClient={byClient} onChanged={reload} /></TabsContent>
         <TabsContent value="gastos" className="mt-4"><Suspense fallback={null}>{tab === "gastos" && <Expenses />}</Suspense></TabsContent>
         <TabsContent value="comisiones" className="mt-4"><Suspense fallback={null}>{tab === "comisiones" && <Commissions />}</Suspense></TabsContent>
+        <TabsContent value="proyeccion" className="mt-4"><Suspense fallback={null}>{tab === "proyeccion" && <Projection />}</Suspense></TabsContent>
       </Tabs>
 
       <InvoiceSheet
