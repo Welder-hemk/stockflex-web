@@ -178,7 +178,7 @@ export default function ProposalSimulator() {
                 <div className="flex items-center justify-between gap-2 flex-wrap">
                   <span className="font-semibold text-primary">{T.palletType} {lines.length > 1 ? i + 1 : ""}</span>
                   <div className="flex gap-2 flex-wrap">
-                    <Button type="button" size="sm" variant="outline" onClick={() => update(l.id, { length: "1,2", width: "1", height: "1,5" })}>{T.presetStandard}</Button>
+                    <Button type="button" size="sm" variant="outline" onClick={() => update(l.id, { length: "1,2", width: "1", height: "1" })}>{T.presetStandard}</Button>
                     <Button type="button" size="sm" variant="outline" onClick={() => update(l.id, { length: "1,2", width: "1", height: "1,8" })}>{T.presetTall}</Button>
                     {lines.length > 1 && (
                       <Button type="button" size="icon" variant="ghost" aria-label={T.remove} onClick={() => setLines((ls) => ls.filter((x) => x.id !== l.id))}>

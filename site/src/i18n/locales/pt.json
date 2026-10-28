@@ -133,7 +133,7 @@
     "tier1Range": "de 1 a 79 posições pallet",
     "tier2Range": "de 80 a 100 posições pallet",
     "tier3Range": "mais de 100 posições pallet",
-    "negotiable": "*Pallet padrão 1,2 × 1,0 × 1,5 m. Menos de 10 posições ou contrato menor que 12 meses têm adicional por posição.",
+    "negotiable": "*Pallet padrão 1,2 × 1,0 × 1,0 m. Menos de 10 posições ou contrato menor que 12 meses têm adicional por posição.",
     "includedTitle": "Incluído no plano:",
     "included": [
       "Vigilância 24h",
@@ -147,7 +147,7 @@
     "specs": [
       "A partir de 1 posição pallet",
       "Contratos a partir de 1 mês; sem adicional a partir de 12 meses",
-      "Pallet padrão 1,2 × 1,0 × 1,5 m",
+      "Pallet padrão 1,2 × 1,0 × 1,0 m",
       "Medida máxima por posição: 1,2 × 1,0 × 1,8 m",
       "Capacidade total: 960 posições em porta-pallets seletivos",
       "Operadores autorizados e procedimentos auditáveis"

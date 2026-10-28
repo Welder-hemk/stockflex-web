@@ -133,7 +133,7 @@
     "tier1Range": "de 1 a 79 posiciones pallet",
     "tier2Range": "de 80 a 100 posiciones pallet",
     "tier3Range": "más de 100 posiciones pallet",
-    "negotiable": "*Pallet estándar 1,2 × 1,0 × 1,5 m. Menos de 10 posiciones o contrato menor a 12 meses tienen adicional por posición.",
+    "negotiable": "*Pallet estándar 1,2 × 1,0 × 1,0 m. Menos de 10 posiciones o contrato menor a 12 meses tienen adicional por posición.",
     "includedTitle": "Incluido en el plan:",
     "included": [
       "Vigilancia 24h",
@@ -147,7 +147,7 @@
     "specs": [
       "Desde 1 posición pallet",
       "Contratos desde 1 mes; sin adicional desde 12 meses",
-      "Pallet estándar 1,2 × 1,0 × 1,5 m",
+      "Pallet estándar 1,2 × 1,0 × 1,0 m",
       "Medida máxima por posición: 1,2 × 1,0 × 1,8 m",
       "Capacidad total: 960 posiciones en racks selectivos",
       "Operadores autorizados y procedimientos auditables"

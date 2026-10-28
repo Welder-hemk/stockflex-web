@@ -37,7 +37,7 @@ export interface Contract {
   recargoDescricao?: string;
   /** Día del mes en que vence la factura */
   diaVencimento?: number;
-  /** Cobra adicional por pallets mayores a 1,8 m³ (si el precio no lo incluye) */
+  /** Cobra adicional por pallets mayores a 1,2 m³ (1,2 × 1,0 × 1,0 m) (si el precio no lo incluye) */
   cobrarSobremedida?: boolean;
   archivoFirmado?: string | null;
   firmadoAt?: string | null;

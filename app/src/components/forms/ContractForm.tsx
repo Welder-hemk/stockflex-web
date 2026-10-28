@@ -302,7 +302,7 @@ export default function ContractForm({ open, onOpenChange, editContract }: Props
                   <FormControl><Switch checked={field.value} onCheckedChange={field.onChange} /></FormControl>
                   <div className="space-y-0.5">
                     <FormLabel>Cobrar adicional por pallets sobremedida</FormLabel>
-                    <FormDescription>Pallets mayores a 1,8 m³: proporcional al volumen + US$ 1,00/mes. Desactívelo si el precio acordado ya lo incluye.</FormDescription>
+                    <FormDescription>Pallets mayores a 1,2 m³ (1,2 × 1,0 × 1,0 m): proporcional al volumen + US$ 1,00/mes. Desactívelo si el precio acordado ya lo incluye.</FormDescription>
                   </div>
                 </FormItem>
               )} />

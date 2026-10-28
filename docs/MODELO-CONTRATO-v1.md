@@ -8,7 +8,7 @@ En la ciudad de {{contrato.ciudad}}, a los {{contrato.fecha}}, entre **{{empresa
 STOCKFLEX presta a EL CLIENTE el servicio de almacenamiento de mercadería paletizada en posiciones pallet de sus depósitos, incluyendo recepción, ubicación, custodia y entrega, conforme a las condiciones de este contrato.
 
 ## SEGUNDA — POSICIONES CONTRATADAS Y PALLET ESTÁNDAR
-EL CLIENTE contrata **{{contrato.posiciones}} posiciones pallet**. Pallet estándar: base de 1,20 × 1,00 m y altura total de hasta 1,50 m (1,8 m³). Se aceptan pallets de hasta 1,20 × 1,00 m de base y 1,80 m de altura, con el adicional por sobremedida que se acuerde. Pallets de mayores dimensiones o peso quedan sujetos a consulta previa.
+EL CLIENTE contrata **{{contrato.posiciones}} posiciones pallet**. Pallet estándar: base de 1,20 × 1,00 m y altura total de hasta 1,00 m (1,2 m³). Se aceptan pallets de hasta 1,20 × 1,00 m de base y 1,80 m de altura, con el adicional por sobremedida que se acuerde. Pallets de mayores dimensiones o peso quedan sujetos a consulta previa.
 Si en algún mes EL CLIENTE utiliza más posiciones que las contratadas, las posiciones excedentes se facturan según el pico de ocupación diaria del mes, al precio por posición vigente.
 
 ## TERCERA — PLAZO

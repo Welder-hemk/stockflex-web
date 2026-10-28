@@ -5,8 +5,8 @@
 
 export const PRICING = {
   currency: "USD",
-  /** Pallet padrão: 1,2 × 1,0 × 1,5 m */
-  standard: { length: 1.2, width: 1.0, height: 1.5 },
+  /** Pallet padrão de referência: 1,2 × 1,0 × 1,0 m (1,2 m³). Mais alto paga proporcional ao volume. */
+  standard: { length: 1.2, width: 1.0, height: 1.0 },
   /** Maior pallet aceito numa posição (acima disso: sob consulta) */
   max: { length: 1.2, width: 1.0, height: 1.8 },
   /** Preço base por posição/mês conforme a quantidade total de posições */
