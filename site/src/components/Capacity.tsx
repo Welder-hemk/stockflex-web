@@ -20,7 +20,7 @@ const Capacity = () => {
             <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/20">
               <div className="flex items-center justify-center gap-6 mb-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary">960</div>
+                  <div className="text-3xl font-bold text-primary">856</div>
                   <div className="text-sm text-text-gray">{t("capacity.stat1")}</div>
                 </div>
                 <div className="text-center">
